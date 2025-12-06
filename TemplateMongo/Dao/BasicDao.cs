@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using MongoDB.Driver;
 using TemplateMongo.Dao.Interfaces;
 using TemplateMongo.Models;

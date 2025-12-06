@@ -1,4 +1,3 @@
-using System;
 using TemplateMongo.Dto;
 
 namespace TemplateMongo.Models;

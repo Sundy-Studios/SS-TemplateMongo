@@ -1,9 +1,6 @@
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using TemplateMongo.Domains.Interfaces;
-using TemplateMongo.Services.Interfaces;
 using TemplateMongo.Models;
+using TemplateMongo.Services.Interfaces;
 
 namespace TemplateMongo.Services;
 

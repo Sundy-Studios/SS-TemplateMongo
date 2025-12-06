@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
@@ -7,7 +8,6 @@ using TemplateMongo.Domains;
 using TemplateMongo.Domains.Interfaces;
 using TemplateMongo.Services;
 using TemplateMongo.Services.Interfaces;
-using System.Net;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

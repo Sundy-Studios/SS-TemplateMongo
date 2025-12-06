@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using TemplateMongo.Models;
+using TemplateMongo.Parameters;
 using TemplateMongo.Services.Interfaces;
 using TemplateMongo.Utility;
-using TemplateMongo.Dto;
-using TemplateMongo.Parameters;
-using TemplateMongo.Models;
 
 namespace TemplateMongo.Controllers;
 
