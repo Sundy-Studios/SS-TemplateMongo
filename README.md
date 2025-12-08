@@ -35,67 +35,39 @@ dotnet restore
 
 ---
 
-## Environment Variables
+## Setting Up Access to the Private NuGet Feed
 
-To use GitHub Packages for private NuGet feeds, store credentials in environment variables.
+To restore packages from the private GitHub Packages feed, each developer needs to create a Personal Access Token and add the GitHub NuGet source to their local machine.
 
-1. A `.env.development` file is provided as an example:
+### 1. Create a Personal Access Token (PAT)
 
-```
-# .env.development
-GITHUB_USERNAME=your_github_username
-GITHUB_PAT=your_personal_access_token_here
-```
+1. Open GitHub settings  
+   https://github.com/settings/tokens?type=beta
+2. Choose **Fine-grained personal access token**.
+3. Select the organization: **Sundy-Studios**.
+4. Under **Permissions**, enable:
+    - **Packages** [Read]
+5. Set an expiration date and generate the token.
+6. Copy the token and store it securely. GitHub will not show it again.
 
-2. Copy it to `.env` and update your values:
+### 2. Add the GitHub Package Source Locally
 
-```
-cp .env.development .env
-```
+Run the following command in **PowerShell**. This stores your credentials in your user-level NuGet configuration so all solutions on your machine can restore packages without placing secrets in the repository.
 
-3. Load the environment variables in your shell:
-
-**Linux / macOS / WSL:**
-
-```
-export $(grep -v '^#' .env | xargs)
-```
-
-**Windows PowerShell:**
-
-```
-Get-Content .env | ForEach-Object {
-    if ($_ -match '^(.*?)=(.*)$') {
-        Set-Item -Path Env:$($matches[1]) -Value $matches[2]
-    }
-}
+```powershell
+dotnet nuget add source "https://nuget.pkg.github.com/Sundy-Studios/index.json" `
+  --name github `
+  --username <your-github-username> `
+  --password <your-pat-token> `
+  --store-password-in-clear-text `
+  --configfile "$env:APPDATA\NuGet\NuGet.Config"
 ```
 
-> ⚠ Note: Environment variables are only available for the current terminal session. You need to reload them for each new session.
+After running the command:
 
----
-
-## NuGet Configuration
-
-`nuget.config` is configured to use environment variables:
-
-```
-<packageSources>
-  <add key="github" value="https://nuget.pkg.github.com/Sundy-Studios/index.json" />
-  <add key="nuget" value="https://api.nuget.org/v3/index.json" />
-</packageSources>
-
-<packageSourceCredentials>
-  <github>
-    <add key="Username" value="%GITHUB_USERNAME%" />
-    <add key="ClearTextPassword" value="%GITHUB_PAT%" />
-  </github>
-</packageSourceCredentials>
-```
-
--   `Username` → your GitHub account username
--   `ClearTextPassword` → your PAT
--   Feed URL → your GitHub organization name
+-   The file %APPDATA%\NuGet\NuGet.Config will be created if it does not exist.
+-   The GitHub NuGet source and credentials will be stored on your machine.
+-   dotnet restore will work normally for this project.
 
 ---
 
