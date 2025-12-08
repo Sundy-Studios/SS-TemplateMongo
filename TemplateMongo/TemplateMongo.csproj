@@ -13,4 +13,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Common" />
+  </ItemGroup>
+
 </Project>

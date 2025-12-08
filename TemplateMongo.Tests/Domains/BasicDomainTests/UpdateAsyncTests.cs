@@ -1,0 +1,40 @@
+using Moq;
+using TemplateMongo.Models;
+
+namespace TemplateMongo.Tests.Domains.BasicDomainTests;
+
+public class UpdateAsyncTests : BasicDomainTestsBase
+{
+    [Fact]
+    public async Task UpdateAsync_ReturnsUpdatedModel()
+    {
+        // Arrange
+        var id = "1";
+        var inputModel = new BasicModel { Name = "UpdatedItem" };
+        var updatedModel = new BasicModel { Id = id, Name = "UpdatedItem" };
+
+        _mockDao.Setup(d => d.CreateAsync(It.Is<BasicModel>(m => m.Id == id), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(updatedModel);
+
+        // Act
+        var result = await _domain.UpdateAsync(id, inputModel);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(id, result.Id);
+        Assert.Equal("UpdatedItem", result.Name);
+    }
+
+    [Fact]
+    public async Task UpdateAsync_CallsDaoOnceWithIdSet()
+    {
+        var id = "1";
+        var inputModel = new BasicModel { Name = "UpdatedItem" };
+
+        // Act
+        await _domain.UpdateAsync(id, inputModel);
+
+        // Assert
+        _mockDao.Verify(d => d.CreateAsync(It.Is<BasicModel>(m => m.Id == id), It.IsAny<CancellationToken>()), Times.Once);
+    }
+}
