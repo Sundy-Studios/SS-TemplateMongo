@@ -5,13 +5,30 @@ jobs:
     format:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
+            - name: Checkout
+              uses: actions/checkout@v4
+
             - name: Setup .NET
               uses: actions/setup-dotnet@v4
               with:
                   dotnet-version: "8.0.x"
+
+            - name: Authenticate GitHub Packages
+              run: |
+                  dotnet nuget remove source github || true
+                  dotnet nuget add source \
+                    https://nuget.pkg.github.com/Sundy-Studios/index.json \
+                    --name github \
+                    --username Sundy0828 \
+                    --password ${{ secrets.PERSONAL_PAT }} \
+                    --store-password-in-clear-text
+
+            - name: Restore
+              run: dotnet restore
+
             - name: Install dotnet-format
               run: dotnet tool install -g dotnet-format
+
             - name: Run dotnet format check
               env:
                   PATH: ${{ env.PATH }}:/home/runner/.dotnet/tools
