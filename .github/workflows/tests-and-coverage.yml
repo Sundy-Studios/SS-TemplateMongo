@@ -14,6 +14,16 @@ jobs:
               with:
                   dotnet-version: 8.0.x
 
+            - name: Authenticate GitHub Packages
+              run: |
+                  dotnet nuget remove source github || true
+                  dotnet nuget add source \
+                    https://nuget.pkg.github.com/Sundy-Studios/index.json \
+                    --name github \
+                    --username Sundy0828 \
+                    --password ${{ secrets.PERSONAL_PAT }} \
+                    --store-password-in-clear-text
+
             - name: Restore
               run: dotnet restore
 
