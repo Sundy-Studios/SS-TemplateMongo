@@ -16,7 +16,6 @@ public class BasicDao : IBasicDao
         _collection = database.GetCollection<BasicModel>("basics");
 
         SetupIndexes();
-        PrintIndexes().Wait();
     }
 
     private void SetupIndexes()
