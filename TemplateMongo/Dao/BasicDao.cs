@@ -1,7 +1,6 @@
 using MongoDB.Driver;
 using TemplateMongo.Dao.Interfaces;
 using TemplateMongo.Models;
-using MongoDB.Bson;
 
 namespace TemplateMongo.Dao;
 
