@@ -1,6 +1,6 @@
+using Common.Testing.Mongo;
 using TemplateMongo.Dao;
 using TemplateMongo.Models;
-using Common.Testing.Mongo;
 
 namespace TemplateMongo.Tests.Dao.BasicDaoTests;
 
