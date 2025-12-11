@@ -4,12 +4,40 @@ using TemplateMongo.Models;
 
 namespace TemplateMongo.Dao;
 
-public class BasicDao(
-    ILogger<BasicDao> logger,
-    IMongoDatabase database) : IBasicDao
+public class BasicDao : IBasicDao
 {
-    private readonly ILogger<BasicDao> _logger = logger;
-    private readonly IMongoCollection<BasicModel> _collection = database.GetCollection<BasicModel>("basics");
+    private readonly ILogger<BasicDao> _logger;
+    private readonly IMongoCollection<BasicModel> _collection;
+
+    public BasicDao(ILogger<BasicDao> logger, IMongoDatabase database)
+    {
+        _logger = logger;
+        _collection = database.GetCollection<BasicModel>("basics");
+
+        SetupIndexes();
+    }
+
+    private void SetupIndexes()
+    {
+        CreateNameIndex();
+        CreateLocationDateIndex();
+    }
+
+    private void CreateNameIndex()
+    {
+        var keys = Builders<BasicModel>.IndexKeys.Ascending(x => x.Name);
+        var model = new CreateIndexModel<BasicModel>(keys, new CreateIndexOptions { Unique = false });
+        _collection.Indexes.CreateOne(model);
+    }
+
+    private void CreateLocationDateIndex()
+    {
+        var keys = Builders<BasicModel>.IndexKeys
+            .Ascending(x => x.Location)
+            .Ascending(x => x.Date);
+        var model = new CreateIndexModel<BasicModel>(keys, new CreateIndexOptions { Unique = false });
+        _collection.Indexes.CreateOne(model);
+    }
 
     public async Task<List<BasicModel>> GetAllAsync(CancellationToken cancellationToken = default)
         => await _collection.Find(_ => true).ToListAsync(cancellationToken);
