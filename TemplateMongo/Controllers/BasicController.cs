@@ -1,5 +1,7 @@
 using Common.Utility;
+using Common.Paging;
 using Microsoft.AspNetCore.Mvc;
+using TemplateMongo.Dto;
 using TemplateMongo.Models;
 using TemplateMongo.Parameters;
 using TemplateMongo.Services.Interfaces;
@@ -20,9 +22,19 @@ public class BasicController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllAsync([FromQuery] GetAllBasicParams parameters)
     {
-        var basicModels = await _service.GetAllAsync();
-        return Ok(basicModels?.Select(BasicModel.ToDto).ToList());
+        var result = await _service.GetAllAsync(parameters);
+
+        var dtoItems = result.Items.Select(BasicModel.ToDto).ToList();
+
+        var dtoResult = PagedResult<BasicDto>.Create(
+            dtoItems,
+            result.PageNumber,
+            result.PageSize,
+            result.TotalItems);
+
+        return Ok(dtoResult);
     }
+
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetBasicByIdAsync([FromRoute] string id)

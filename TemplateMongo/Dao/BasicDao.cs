@@ -1,6 +1,8 @@
 using MongoDB.Driver;
 using TemplateMongo.Dao.Interfaces;
 using TemplateMongo.Models;
+using TemplateMongo.Parameters;
+using Common.Paging;
 
 namespace TemplateMongo.Dao;
 
@@ -39,8 +41,27 @@ public class BasicDao : IBasicDao
         _collection.Indexes.CreateOne(model);
     }
 
-    public async Task<List<BasicModel>> GetAllAsync(CancellationToken cancellationToken = default)
-        => await _collection.Find(_ => true).ToListAsync(cancellationToken);
+    public async Task<PagedResult<BasicModel>> GetAllAsync(
+        GetAllBasicParams parameters,
+        CancellationToken cancellationToken = default)
+    {
+        var filter = Builders<BasicModel>.Filter.Empty;
+
+        var totalItems = await _collection.CountDocumentsAsync(filter, cancellationToken: cancellationToken);
+
+        var items = await _collection.Find(filter)
+            .SortBy(x => x.Location)
+            .ThenBy(x => x.Date)
+            .Skip(parameters.Skip)
+            .Limit(parameters.PageSize)
+            .ToListAsync(cancellationToken);
+
+        return PagedResult<BasicModel>.Create(
+            items,
+            parameters.PageNumber,
+            parameters.PageSize,
+            totalItems);
+    }
 
     public async Task<BasicModel> GetByIdAsync(string id, CancellationToken cancellationToken = default)
         => await _collection.Find(x => x.Id == id).FirstOrDefaultAsync(cancellationToken);

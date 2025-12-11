@@ -1,6 +1,8 @@
 using TemplateMongo.Dao.Interfaces;
 using TemplateMongo.Domains.Interfaces;
 using TemplateMongo.Models;
+using TemplateMongo.Parameters;
+using Common.Paging;
 
 namespace TemplateMongo.Domains;
 
@@ -11,7 +13,7 @@ public class BasicDomain(
     private readonly ILogger<BasicDomain> _logger = logger;
     private readonly IBasicDao _dao = dao;
 
-    public async Task<List<BasicModel>> GetAllAsync(CancellationToken cancellationToken = default) => await _dao.GetAllAsync(cancellationToken);
+    public async Task<PagedResult<BasicModel>> GetAllAsync(GetAllBasicParams parameters, CancellationToken cancellationToken = default) => await _dao.GetAllAsync(parameters, cancellationToken);
 
     public async Task<BasicModel> GetByIdAsync(string id, CancellationToken cancellationToken = default) => await _dao.GetByIdAsync(id, cancellationToken);
 
