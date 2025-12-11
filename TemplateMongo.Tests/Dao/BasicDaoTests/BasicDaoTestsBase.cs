@@ -9,6 +9,7 @@ namespace TemplateMongo.Tests.Dao.BasicDaoTests;
 public abstract class BasicDaoTestsBase
 {
     protected readonly Mock<IMongoCollection<BasicModel>> _mockCollection;
+    protected readonly Mock<IMongoIndexManager<BasicModel>> _mockIndexes;
     protected readonly Mock<IMongoDatabase> _mockDatabase;
     protected readonly Mock<ILogger<BasicDao>> _mockLogger;
     protected readonly BasicDao _dao;
@@ -26,11 +27,11 @@ public abstract class BasicDaoTestsBase
             .Returns(new MongoCollectionSettings());
 
         // Mock Indexes so CreateOne won't throw
-        var mockIndexes = new Mock<IMongoIndexManager<BasicModel>>();
-        mockIndexes
+        _mockIndexes = new Mock<IMongoIndexManager<BasicModel>>();
+        _mockIndexes
             .Setup(i => i.CreateOne(It.IsAny<CreateIndexModel<BasicModel>>(), It.IsAny<CreateOneIndexOptions>(), It.IsAny<CancellationToken>()))
             .Returns("ok");
-        _mockCollection.SetupGet(c => c.Indexes).Returns(mockIndexes.Object);
+        _mockCollection.SetupGet(c => c.Indexes).Returns(_mockIndexes.Object);
 
         _mockDatabase = new Mock<IMongoDatabase>();
         _mockDatabase
@@ -42,4 +43,22 @@ public abstract class BasicDaoTestsBase
         // This now works because Indexes are mocked
         _dao = new BasicDao(_mockLogger.Object, _mockDatabase.Object);
     }
+
+    public static Mock<IAsyncCursor<BasicModel>> CreateMockCursor(List<BasicModel> models)
+    {
+        var mockCursor = new Mock<IAsyncCursor<BasicModel>>();
+        
+        mockCursor.Setup(_ => _.Current).Returns(models);
+        mockCursor
+            .SetupSequence(_ => _.MoveNext(It.IsAny<CancellationToken>()))
+            .Returns(true)
+            .Returns(false);
+        mockCursor
+            .SetupSequence(_ => _.MoveNextAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(true)
+            .ReturnsAsync(false);
+
+        return mockCursor;
+    }
+
 }
