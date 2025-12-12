@@ -1,5 +1,7 @@
+using Common.Paging;
 using TemplateMongo.Domains.Interfaces;
 using TemplateMongo.Models;
+using TemplateMongo.Parameters;
 using TemplateMongo.Services.Interfaces;
 
 namespace TemplateMongo.Services;
@@ -11,7 +13,7 @@ public class BasicService(
     private readonly ILogger<BasicService> _logger = logger;
     private readonly IBasicDomain _domain = domain;
 
-    public async Task<List<BasicModel>> GetAllAsync(CancellationToken cancellationToken = default) => await _domain.GetAllAsync(cancellationToken);
+    public async Task<PagedResult<BasicModel>> GetAllAsync(GetAllBasicParams parameters, CancellationToken cancellationToken = default) => await _domain.GetAllAsync(parameters, cancellationToken);
 
     public async Task<BasicModel> GetByIdAsync(string id, CancellationToken cancellationToken = default) => await _domain.GetByIdAsync(id, cancellationToken);
 

@@ -1,6 +1,7 @@
 using MongoDB.Driver;
 using Moq;
 using TemplateMongo.Models;
+using TemplateMongo.Parameters;
 
 namespace TemplateMongo.Tests.Dao.BasicDaoTests;
 
@@ -24,10 +25,10 @@ public class GetAllAsyncTests : BasicDaoTestsBase
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(mockCursor.Object);
 
-        var result = await _dao.GetAllAsync();
+        var result = await _dao.GetAllAsync(new GetAllBasicParams() { });
 
-        Assert.Equal(2, result.Count);
-        Assert.Equal("1", result[0].Id);
-        Assert.Equal("2", result[1].Id);
+        Assert.Equal(2, result.Items.Count);
+        Assert.Equal("1", result.Items[0].Id);
+        Assert.Equal("2", result.Items[1].Id);
     }
 }

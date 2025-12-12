@@ -1,12 +1,14 @@
+using Common.Paging;
 using Moq;
 using TemplateMongo.Models;
+using TemplateMongo.Parameters;
 
 namespace TemplateMongo.Tests.Domains.BasicDomainTests;
 
 public class GetAllAsyncTests : BasicDomainTestsBase
 {
     [Fact]
-    public async Task GetAllAsync_ReturnsListOfModels()
+    public async Task GetAllAsync_ReturnsPagedResult()
     {
         // Arrange
         var sampleList = new List<BasicModel>
@@ -15,26 +17,37 @@ public class GetAllAsyncTests : BasicDomainTestsBase
             new BasicModel { Id = "2", Name = "Test2" }
         };
 
-        _mockDao.Setup(d => d.GetAllAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(sampleList);
+        var pagedResult = PagedResult<BasicModel>.Create(sampleList, 1, 10, sampleList.Count);
+
+        _mockDao.Setup(d => d.GetAllAsync(It.IsAny<GetAllBasicParams>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(pagedResult);
+
+        var parameters = new GetAllBasicParams
+        {
+            PageNumber = 1,
+            PageSize = 10
+        };
 
         // Act
-        var result = await _domain.GetAllAsync();
+        var result = await _domain.GetAllAsync(parameters);
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(2, result.Count);
-        Assert.Equal("Test1", result[0].Name);
-        Assert.Equal("Test2", result[1].Name);
+        Assert.Equal(2, result.Items.Count);
+        Assert.Equal(1, result.PageNumber);
+        Assert.Equal(10, result.PageSize);
+        Assert.Equal(2, result.TotalItems);
+        Assert.Equal(1, result.TotalPages);
+        Assert.Equal("Test1", result.Items[0].Name);
+        Assert.Equal("Test2", result.Items[1].Name);
     }
 
     [Fact]
     public async Task GetAllAsync_CallsDaoOnce()
     {
-        // Act
-        await _domain.GetAllAsync();
+        var parameters = new GetAllBasicParams();
+        await _domain.GetAllAsync(parameters);
 
-        // Assert
-        _mockDao.Verify(d => d.GetAllAsync(It.IsAny<CancellationToken>()), Times.Once);
+        _mockDao.Verify(d => d.GetAllAsync(It.IsAny<GetAllBasicParams>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

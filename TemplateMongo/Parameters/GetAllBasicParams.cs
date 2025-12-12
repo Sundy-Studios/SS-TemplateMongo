@@ -1,3 +1,7 @@
+using Common.Paging;
+
 namespace TemplateMongo.Parameters;
 
-public class GetAllBasicParams { }
+public class GetAllBasicParams : PaginationParams
+{
+}
