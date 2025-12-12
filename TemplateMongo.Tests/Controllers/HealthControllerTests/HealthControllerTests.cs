@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using TemplateMongo.Controllers;
 
 namespace TemplateMongo.Tests.Controllers.HealthControllerTests;
 

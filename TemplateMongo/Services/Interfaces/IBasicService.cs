@@ -1,6 +1,6 @@
+using Common.Paging;
 using TemplateMongo.Models;
 using TemplateMongo.Parameters;
-using Common.Paging;
 
 namespace TemplateMongo.Services.Interfaces;
 

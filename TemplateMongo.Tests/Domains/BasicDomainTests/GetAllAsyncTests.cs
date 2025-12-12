@@ -1,7 +1,7 @@
+using Common.Paging;
 using Moq;
 using TemplateMongo.Models;
 using TemplateMongo.Parameters;
-using Common.Paging;
 
 namespace TemplateMongo.Tests.Domains.BasicDomainTests;
 

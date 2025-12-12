@@ -1,4 +1,3 @@
-using System.Linq;
 using Common.Paging;
 using Microsoft.AspNetCore.Mvc;
 using Moq;

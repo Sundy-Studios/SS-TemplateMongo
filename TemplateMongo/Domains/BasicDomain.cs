@@ -1,8 +1,8 @@
+using Common.Paging;
 using TemplateMongo.Dao.Interfaces;
 using TemplateMongo.Domains.Interfaces;
 using TemplateMongo.Models;
 using TemplateMongo.Parameters;
-using Common.Paging;
 
 namespace TemplateMongo.Domains;
 

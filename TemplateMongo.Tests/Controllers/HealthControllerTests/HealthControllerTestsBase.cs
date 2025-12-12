@@ -1,4 +1,3 @@
-using Moq;
 using TemplateMongo.Controllers;
 
 namespace TemplateMongo.Tests.Controllers.HealthControllerTests;
