@@ -15,6 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageVersion Include="Common" Version="1.2.0-notick-pagination.43853eb1" />
+    <PackageVersion Include="Common" Version="1.2.0" />
   </ItemGroup>
 </Project>
