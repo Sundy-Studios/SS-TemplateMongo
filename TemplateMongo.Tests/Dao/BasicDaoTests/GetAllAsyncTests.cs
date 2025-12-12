@@ -25,7 +25,7 @@ public class GetAllAsyncTests : BasicDaoTestsBase
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(mockCursor.Object);
 
-        var result = await _dao.GetAllAsync(new GetAllBasicParams() {});
+        var result = await _dao.GetAllAsync(new GetAllBasicParams() { });
 
         Assert.Equal(2, result.Items.Count);
         Assert.Equal("1", result.Items[0].Id);
