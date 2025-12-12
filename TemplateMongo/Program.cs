@@ -1,4 +1,5 @@
 using System.Net;
+using Common.Auth;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
@@ -10,6 +11,8 @@ using TemplateMongo.Services;
 using TemplateMongo.Services.Interfaces;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddFirebaseAuth(builder.Configuration);
 
 // MongoDB
 var mongoClient = new MongoClient(builder.Configuration["MongoDb:ConnectionString"]);
@@ -29,12 +32,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Type = SecuritySchemeType.ApiKey,
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Name = "X-Api-Key",
-        Description = "API Key Authentication"
+        Description = "Enter your Firebase ID token, example: Bearer eyJhbGciOiJSUzI1NiIs..."
     });
 
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -45,7 +50,7 @@ builder.Services.AddSwaggerGen(options =>
                 Reference = new OpenApiReference
                 {
                     Type = ReferenceType.SecurityScheme,
-                    Id = "ApiKey"
+                    Id = "Bearer"
                 }
             },
             Array.Empty<string>()
@@ -97,6 +102,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseFirebaseAuth();
 
 app.MapControllers();
 

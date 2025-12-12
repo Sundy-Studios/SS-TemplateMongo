@@ -1,5 +1,6 @@
 using Common.Paging;
 using Common.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TemplateMongo.Dto;
 using TemplateMongo.Models;
@@ -46,6 +47,7 @@ public class BasicController : ControllerBase
         return basicModel is not null ? Ok(BasicModel.ToDto(basicModel)) : NotFound();
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> CreateBasicAsync([FromBody] CreateBasicParams parameters)
     {
@@ -59,6 +61,7 @@ public class BasicController : ControllerBase
         return Created("", dto);
     }
 
+    [Authorize]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateBasicAsync([FromRoute] UpdateBasicParams parameters)
     {
@@ -72,6 +75,7 @@ public class BasicController : ControllerBase
         return Ok(BasicModel.ToDto(basicModel));
     }
 
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteBasicAsync([FromRoute] DeleteBasicParams parameters)
     {
