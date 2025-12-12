@@ -83,6 +83,9 @@ Inside the `TemplateMongo` folder, include these configuration files:
     "ConnectionString": "mongodb+srv://xxx:xxx@xxx.mongodb.net/",
     "DatabaseName": "TemplateMongoDb"
   },
+  "Firebase": {
+      "ProjectId": "xxx"
+  },
   "Logging": {
     "LogLevel": {
       "Default": "Information",
