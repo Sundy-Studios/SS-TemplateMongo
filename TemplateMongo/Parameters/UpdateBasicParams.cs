@@ -4,6 +4,7 @@ namespace TemplateMongo.Parameters;
 
 public class UpdateBasicParams
 {
-    public string Id { get; set; } = string.Empty;
-    public BasicDto Basic { get; set; } = default!;
+    public string Name { get; set; } = null!;
+    public string Location { get; set; } = null!;
+    public DateTime Date { get; set; }
 }

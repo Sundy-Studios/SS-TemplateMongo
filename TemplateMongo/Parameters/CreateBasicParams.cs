@@ -4,5 +4,7 @@ namespace TemplateMongo.Parameters;
 
 public class CreateBasicParams
 {
-    public BasicDto Basic { get; set; } = default!;
+    public string Name { get; set; } = null!;
+    public string Location { get; set; } = null!;
+    public DateTime Date { get; set; }
 }

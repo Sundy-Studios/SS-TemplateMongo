@@ -52,10 +52,10 @@ public class BasicController : ControllerBase
     public async Task<IActionResult> CreateBasicAsync([FromBody] CreateBasicParams parameters)
     {
         Guard.AgainstNull(parameters, nameof(parameters));
-        Guard.AgainstNullOrWhiteSpace(parameters.Basic.Name, nameof(parameters.Basic.Name));
-        Guard.AgainstNullOrWhiteSpace(parameters.Basic.Location, nameof(parameters.Basic.Location));
+        Guard.AgainstNullOrWhiteSpace(parameters.Name, nameof(parameters.Name));
+        Guard.AgainstNullOrWhiteSpace(parameters.Location, nameof(parameters.Location));
 
-        var createdModel = await _service.CreateAsync(BasicModel.FromDto(parameters.Basic));
+        var createdModel = await _service.CreateAsync(BasicModel.FromParams(parameters));
         var dto = BasicModel.ToDto(createdModel);
 
         return Created("", dto);
@@ -63,24 +63,23 @@ public class BasicController : ControllerBase
 
     [Authorize]
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateBasicAsync([FromRoute] UpdateBasicParams parameters)
+    public async Task<IActionResult> UpdateBasicAsync([FromRoute] string id, [FromBody] UpdateBasicParams parameters)
     {
         Guard.AgainstNull(parameters, nameof(parameters));
-        Guard.AgainstNullOrWhiteSpace(parameters.Id, nameof(parameters.Id));
-        Guard.AgainstNullOrWhiteSpace(parameters.Basic.Name, nameof(parameters.Basic.Name));
-        Guard.AgainstNullOrWhiteSpace(parameters.Basic.Location, nameof(parameters.Basic.Location));
+        Guard.AgainstNullOrWhiteSpace(id, nameof(id));
+        Guard.AgainstNullOrWhiteSpace(parameters.Name, nameof(parameters.Name));
+        Guard.AgainstNullOrWhiteSpace(parameters.Location, nameof(parameters.Location));
 
-        var basicModel = await _service.UpdateAsync(parameters.Id, BasicModel.FromDto(parameters.Basic));
-
+        var basicModel = await _service.UpdateAsync(id, BasicModel.FromParams(id, parameters));
         return Ok(BasicModel.ToDto(basicModel));
     }
 
     [Authorize]
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteBasicAsync([FromRoute] DeleteBasicParams parameters)
+    public async Task<IActionResult> DeleteBasicAsync([FromRoute] string id)
     {
-        Guard.AgainstNullOrWhiteSpace(parameters.Id, nameof(parameters.Id));
-        await _service.DeleteAsync(parameters.Id);
+        Guard.AgainstNullOrWhiteSpace(id, nameof(id));
+        await _service.DeleteAsync(id);
 
         return NoContent();
     }

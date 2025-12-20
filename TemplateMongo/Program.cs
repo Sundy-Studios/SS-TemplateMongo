@@ -58,6 +58,20 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("DevCors", policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        });
+    });
+}
+
 WebApplication app = builder.Build();
 
 // Global Exception Handling Middleware
@@ -99,6 +113,7 @@ app.UseExceptionHandler(errorApp =>
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseCors("DevCors");
     app.UseSwagger();
     app.UseSwaggerUI();
 }

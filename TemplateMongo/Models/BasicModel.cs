@@ -1,4 +1,5 @@
 using TemplateMongo.Dto;
+using TemplateMongo.Parameters;
 
 namespace TemplateMongo.Models;
 
@@ -38,6 +39,33 @@ public class BasicModel
             Name = model.Name,
             Location = model.Location,
             Date = model.Date
+        };
+    }
+
+    public static BasicModel FromParams(CreateBasicParams parameters)
+    {
+        if (parameters == null)
+            return null!;
+
+        return new BasicModel
+        {
+            Name = parameters.Name,
+            Location = parameters.Location,
+            Date = parameters.Date
+        };
+    }
+
+    public static BasicModel FromParams(string id, UpdateBasicParams parameters)
+    {
+        if (parameters == null)
+            return null!;
+
+        return new BasicModel
+        {
+            Id = id,
+            Name = parameters.Name,
+            Location = parameters.Location,
+            Date = parameters.Date
         };
     }
 }
