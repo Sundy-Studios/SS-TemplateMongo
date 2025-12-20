@@ -1,5 +1,3 @@
-using TemplateMongo.Dto;
-
 namespace TemplateMongo.Parameters;
 
 public class UpdateBasicParams

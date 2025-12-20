@@ -11,15 +11,15 @@ public class UpdateAsyncTests : BasicControllerTestsBase
     [Fact]
     public async Task UpdateBasicAsync_ReturnsOk()
     {
-        var dto = new BasicDto { Name = "N", Location = "L" };
         var model = new BasicModel { Id = "1", Name = "N", Location = "L" };
 
         _mockService.Setup(s => s.UpdateAsync("1", It.IsAny<BasicModel>(), It.IsAny<CancellationToken>()))
                     .ReturnsAsync(model);
 
-        var param = new UpdateBasicParams { Id = "1", Basic = dto };
+        var id = "1";
+        var param = new UpdateBasicParams { Name = "N", Location = "L" };
 
-        var result = await _controller.UpdateBasicAsync(param);
+        var result = await _controller.UpdateBasicAsync(id, param);
 
         var ok = Assert.IsType<OkObjectResult>(result);
         var returned = Assert.IsType<TemplateMongo.Dto.BasicDto>(ok.Value);
