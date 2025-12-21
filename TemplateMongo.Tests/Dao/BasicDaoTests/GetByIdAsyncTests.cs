@@ -13,14 +13,14 @@ public class GetByIdAsyncTests : BasicDaoTestsBase
 
         var mockCursor = CreateMockCursor(new List<BasicModel> { expected });
 
-        _mockCollection
+        MockCollection
             .Setup(c => c.FindAsync(
                 It.IsAny<FilterDefinition<BasicModel>>(),
                 It.IsAny<FindOptions<BasicModel, BasicModel>>(),
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(mockCursor.Object);
 
-        var result = await _dao.GetByIdAsync("123");
+        var result = await Dao.GetByIdAsync("123");
 
         Assert.NotNull(result);
         Assert.Equal("123", result.Id);

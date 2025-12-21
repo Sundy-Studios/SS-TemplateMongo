@@ -13,7 +13,7 @@ public class GetAllAsyncTests : BasicControllerTestsBase
     public async Task GetAllAsync_ReturnsOkWithPagedDto()
     {
         var model = new BasicModel { Id = "1", Name = "A", Location = "L" };
-        var paged = PagedResult<BasicModel>.Create(new[] { model }, 1, 10, 1);
+        var paged = PagedResultFactory.Create(new[] { model }, 1, 10, 1);
 
         _mockService.Setup(s => s.GetAllAsync(It.IsAny<GetAllBasicParams>(), It.IsAny<CancellationToken>()))
                     .ReturnsAsync(paged);

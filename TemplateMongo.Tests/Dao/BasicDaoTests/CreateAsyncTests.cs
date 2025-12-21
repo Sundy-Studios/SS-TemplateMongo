@@ -10,9 +10,9 @@ public class CreateAsyncTests : BasicDaoTestsBase
     {
         var model = new BasicModel { Name = "New" };
 
-        await _dao.CreateAsync(model);
+        await Dao.CreateAsync(model);
 
-        _mockCollection.Verify(c => c.InsertOneAsync(
+        MockCollection.Verify(c => c.InsertOneAsync(
             It.Is<BasicModel>(m => m.Name == "New" && !string.IsNullOrEmpty(m.Id)),
             null,
             It.IsAny<CancellationToken>()),

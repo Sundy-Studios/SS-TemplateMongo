@@ -11,14 +11,14 @@ public class DeleteAsyncTests : BasicDaoTestsBase
     {
         var id = "deleteMe";
 
-        _mockCollection.Setup(c => c.DeleteOneAsync(
+        MockCollection.Setup(c => c.DeleteOneAsync(
                 It.IsAny<FilterDefinition<BasicModel>>(),
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(Mock.Of<DeleteResult>());
 
-        await _dao.DeleteAsync(id);
+        await Dao.DeleteAsync(id);
 
-        _mockCollection.Verify(c => c.DeleteOneAsync(
+        MockCollection.Verify(c => c.DeleteOneAsync(
             It.IsAny<FilterDefinition<BasicModel>>(),
             It.IsAny<CancellationToken>()),
             Times.Once);

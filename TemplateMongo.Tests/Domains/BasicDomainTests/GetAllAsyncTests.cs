@@ -17,7 +17,7 @@ public class GetAllAsyncTests : BasicDomainTestsBase
             new BasicModel { Id = "2", Name = "Test2" }
         };
 
-        var pagedResult = PagedResult<BasicModel>.Create(sampleList, 1, 10, sampleList.Count);
+        var pagedResult = PagedResultFactory.Create(sampleList, 1, 10, sampleList.Count);
 
         _mockDao.Setup(d => d.GetAllAsync(It.IsAny<GetAllBasicParams>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(pagedResult);

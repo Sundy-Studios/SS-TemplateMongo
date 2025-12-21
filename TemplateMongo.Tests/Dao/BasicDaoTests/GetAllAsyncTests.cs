@@ -18,14 +18,14 @@ public class GetAllAsyncTests : BasicDaoTestsBase
 
         var mockCursor = CreateMockCursor(models);
 
-        _mockCollection
+        MockCollection
             .Setup(c => c.FindAsync(
                 It.IsAny<FilterDefinition<BasicModel>>(),
                 It.IsAny<FindOptions<BasicModel, BasicModel>>(),
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(mockCursor.Object);
 
-        var result = await _dao.GetAllAsync(new GetAllBasicParams() { });
+        var result = await Dao.GetAllAsync(new GetAllBasicParams() { });
 
         Assert.Equal(2, result.Items.Count);
         Assert.Equal("1", result.Items[0].Id);

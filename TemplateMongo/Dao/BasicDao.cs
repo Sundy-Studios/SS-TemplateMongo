@@ -56,7 +56,7 @@ public class BasicDao : IBasicDao
             .Limit(parameters.PageSize)
             .ToListAsync(cancellationToken);
 
-        return PagedResult<BasicModel>.Create(
+        return PagedResultFactory.Create(
             items,
             parameters.PageNumber,
             parameters.PageSize,

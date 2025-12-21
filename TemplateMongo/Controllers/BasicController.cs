@@ -27,7 +27,7 @@ public class BasicController : ControllerBase
 
         var dtoItems = result.Items.Select(BasicModel.ToDto).ToList();
 
-        var dtoResult = PagedResult<BasicDto>.Create(
+        var dtoResult = PagedResultFactory.Create(
             dtoItems,
             result.PageNumber,
             result.PageSize,
