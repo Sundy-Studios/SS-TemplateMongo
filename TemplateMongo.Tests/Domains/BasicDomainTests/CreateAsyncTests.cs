@@ -18,21 +18,11 @@ public class CreateAsyncTests : BasicDomainTestsBase
         // Act
         var result = await Domain.CreateAsync(inputModel);
 
+        MockDao.Verify(d => d.CreateAsync(inputModel, It.IsAny<CancellationToken>()), Times.Once);
+
         // Assert
         Assert.NotNull(result);
         Assert.Equal("1", result.Id);
         Assert.Equal("NewItem", result.Name);
-    }
-
-    [Fact]
-    public async Task CreateAsyncCallsDaoOnce()
-    {
-        var inputModel = new BasicModel { Name = "NewItem" };
-
-        // Act
-        await Domain.CreateAsync(inputModel);
-
-        // Assert
-        MockDao.Verify(d => d.CreateAsync(inputModel, It.IsAny<CancellationToken>()), Times.Once);
     }
 }

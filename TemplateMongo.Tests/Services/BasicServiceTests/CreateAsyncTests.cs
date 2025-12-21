@@ -16,18 +16,10 @@ public class CreateAsyncTests : BasicServiceTestsBase
 
         var result = await Service.CreateAsync(inputModel);
 
+        MockDomain.Verify(d => d.CreateAsync(inputModel, It.IsAny<CancellationToken>()), Times.Once);
+
         Assert.NotNull(result);
         Assert.Equal("1", result.Id);
         Assert.Equal("NewItem", result.Name);
-    }
-
-    [Fact]
-    public async Task CreateAsyncCallsDomainOnce()
-    {
-        var inputModel = new BasicModel { Name = "NewItem" };
-
-        await Service.CreateAsync(inputModel);
-
-        MockDomain.Verify(d => d.CreateAsync(inputModel, It.IsAny<CancellationToken>()), Times.Once);
     }
 }

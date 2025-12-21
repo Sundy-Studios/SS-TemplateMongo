@@ -31,6 +31,8 @@ public class GetAllAsyncTests : BasicDomainTestsBase
         // Act
         var result = await Domain.GetAllAsync(parameters);
 
+        MockDao.Verify(d => d.GetAllAsync(It.IsAny<GetAllBasicParams>(), It.IsAny<CancellationToken>()), Times.Once);
+
         // Assert
         Assert.NotNull(result);
         Assert.Equal(2, result.Items.Count);
@@ -40,14 +42,5 @@ public class GetAllAsyncTests : BasicDomainTestsBase
         Assert.Equal(1, result.TotalPages);
         Assert.Equal("Test1", result.Items[0].Name);
         Assert.Equal("Test2", result.Items[1].Name);
-    }
-
-    [Fact]
-    public async Task GetAllAsyncCallsDaoOnce()
-    {
-        var parameters = new GetAllBasicParams();
-        await Domain.GetAllAsync(parameters);
-
-        MockDao.Verify(d => d.GetAllAsync(It.IsAny<GetAllBasicParams>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }
