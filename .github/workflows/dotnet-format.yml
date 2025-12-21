@@ -1,35 +1,42 @@
 name: dotnet-format check
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened]
 
 jobs:
-    format:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: Setup .NET
-              uses: actions/setup-dotnet@v4
-              with:
-                  dotnet-version: "10.0.x"
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
 
-            - name: Authenticate GitHub Packages
-              run: |
-                  dotnet nuget remove source github || true
-                  dotnet nuget add source \
-                    https://nuget.pkg.github.com/Sundy-Studios/index.json \
-                    --name github \
-                    --username Sundy0828 \
-                    --password ${{ secrets.PERSONAL_PAT }} \
-                    --store-password-in-clear-text
+      - name: Authenticate GitHub Packages
+        run: |
+          dotnet nuget remove source github || true
+          dotnet nuget add source \
+            https://nuget.pkg.github.com/Sundy-Studios/index.json \
+            --name github \
+            --username Sundy0828 \
+            --password ${{ secrets.PERSONAL_PAT }} \
+            --store-password-in-clear-text
 
-            - name: Restore
-              run: dotnet restore
+      - name: Restore
+        run: dotnet restore
 
-            - name: Install dotnet-format
-              run: dotnet tool install -g dotnet-format
+      - name: Install dotnet-format
+        run: dotnet tool install -g dotnet-format
 
-            - name: Run dotnet format check
-              env:
-                  PATH: ${{ env.PATH }}:/home/runner/.dotnet/tools
-              run: dotnet format --verify-no-changes
+      - name: Run dotnet format check
+        env:
+          PATH: ${{ env.PATH }}:/home/runner/.dotnet/tools
+        run: dotnet format --verify-no-changes
