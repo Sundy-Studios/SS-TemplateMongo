@@ -12,16 +12,12 @@ public class UpdateAsyncTests : BasicControllerTestsBase
     {
         var model = new BasicModel { Id = "1", Name = "N", Location = "L" };
 
-        MockService.Setup(s => s.UpdateAsync("1", It.IsAny<BasicModel>(), It.IsAny<CancellationToken>()))
-                    .ReturnsAsync(model);
-
         var id = "1";
         var param = new UpdateBasicParams { Name = "N", Location = "L" };
 
         var result = await Controller.UpdateBasicAsync(id, param);
 
-        var ok = Assert.IsType<OkObjectResult>(result);
-        var returned = Assert.IsType<Dto.BasicDto>(ok.Value);
-        Assert.Equal("1", returned.Id);
+        Assert.IsType<NoContentResult>(result);
+        MockService.Verify(s => s.UpdateAsync(id, It.IsAny<BasicModel>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

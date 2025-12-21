@@ -72,16 +72,15 @@ public class BasicService(
         }
     }
 
-    public async Task<BasicModel> UpdateAsync(string id, BasicModel model, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(string id, BasicModel model, CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Updating BasicModel with Id: {Id}", id);
 
         try
         {
             model.Id = id;
-            var updated = await _domain.UpdateAsync(id, model, cancellationToken); // assuming domain has UpdateAsync
+            await _domain.UpdateAsync(id, model, cancellationToken);
             _logger.LogInformation("Updated BasicModel with Id: {Id}", id);
-            return updated;
         }
         catch (Exception ex)
         {

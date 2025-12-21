@@ -6,9 +6,7 @@ using TemplateMongo.Domains.Interfaces;
 using TemplateMongo.Models;
 using TemplateMongo.Parameters;
 
-public class BasicDomain(
-    ILogger<BasicDomain> logger,
-    IBasicDao dao) : IBasicDomain
+public class BasicDomain(ILogger<BasicDomain> logger, IBasicDao dao) : IBasicDomain
 {
     private readonly ILogger<BasicDomain> _logger = logger;
     private readonly IBasicDao _dao = dao;
@@ -72,16 +70,15 @@ public class BasicDomain(
         }
     }
 
-    public async Task<BasicModel> UpdateAsync(string id, BasicModel model, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(string id, BasicModel model, CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Updating BasicModel with Id: {Id}", id);
 
         try
         {
             model.Id = id;
-            var updated = await _dao.UpdateAsync(id, model, cancellationToken); // assuming DAO has UpdateAsync
+            await _dao.UpdateAsync(id, model, cancellationToken);
             _logger.LogInformation("Updated BasicModel with Id: {Id}", id);
-            return updated;
         }
         catch (Exception ex)
         {

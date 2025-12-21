@@ -64,8 +64,8 @@ public class BasicController(IBasicService service) : ControllerBase
         Guard.AgainstNullOrWhiteSpace(parameters.Name, nameof(parameters.Name));
         Guard.AgainstNullOrWhiteSpace(parameters.Location, nameof(parameters.Location));
 
-        var basicModel = await _service.UpdateAsync(id, BasicModel.FromParams(id, parameters));
-        return Ok(BasicModel.ToDto(basicModel));
+        await _service.UpdateAsync(id, BasicModel.FromParams(id, parameters));
+        return NoContent();
     }
 
     [Authorize]
