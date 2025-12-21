@@ -7,14 +7,14 @@ using TemplateMongo.Services;
 
 public abstract class BasicServiceTestsBase
 {
-    protected readonly Mock<IBasicDomain> _mockDomain;
-    protected readonly Mock<ILogger<BasicService>> _mockLogger;
-    protected readonly BasicService _service;
+    protected Mock<IBasicDomain> MockDomain { get; }
+    protected Mock<ILogger<BasicService>> MockLogger { get; }
+    protected BasicService Service { get; }
 
     protected BasicServiceTestsBase()
     {
-        _mockDomain = new Mock<IBasicDomain>();
-        _mockLogger = new Mock<ILogger<BasicService>>();
-        _service = new BasicService(_mockLogger.Object, _mockDomain.Object);
+        MockDomain = new Mock<IBasicDomain>();
+        MockLogger = new Mock<ILogger<BasicService>>();
+        Service = new BasicService(MockLogger.Object, MockDomain.Object);
     }
 }

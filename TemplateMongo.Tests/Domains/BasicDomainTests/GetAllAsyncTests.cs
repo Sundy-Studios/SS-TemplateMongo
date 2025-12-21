@@ -19,7 +19,7 @@ public class GetAllAsyncTests : BasicDomainTestsBase
 
         var pagedResult = PagedResultFactory.Create(sampleList, 1, 10, sampleList.Count);
 
-        _mockDao.Setup(d => d.GetAllAsync(It.IsAny<GetAllBasicParams>(), It.IsAny<CancellationToken>()))
+        MockDao.Setup(d => d.GetAllAsync(It.IsAny<GetAllBasicParams>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(pagedResult);
 
         var parameters = new GetAllBasicParams
@@ -29,7 +29,7 @@ public class GetAllAsyncTests : BasicDomainTestsBase
         };
 
         // Act
-        var result = await _domain.GetAllAsync(parameters);
+        var result = await Domain.GetAllAsync(parameters);
 
         // Assert
         Assert.NotNull(result);
@@ -46,8 +46,8 @@ public class GetAllAsyncTests : BasicDomainTestsBase
     public async Task GetAllAsyncCallsDaoOnce()
     {
         var parameters = new GetAllBasicParams();
-        await _domain.GetAllAsync(parameters);
+        await Domain.GetAllAsync(parameters);
 
-        _mockDao.Verify(d => d.GetAllAsync(It.IsAny<GetAllBasicParams>(), It.IsAny<CancellationToken>()), Times.Once);
+        MockDao.Verify(d => d.GetAllAsync(It.IsAny<GetAllBasicParams>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

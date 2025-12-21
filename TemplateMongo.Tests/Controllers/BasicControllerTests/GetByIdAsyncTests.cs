@@ -11,10 +11,10 @@ public class GetByIdAsyncTests : BasicControllerTestsBase
     {
         var model = new BasicModel { Id = "1", Name = "Item", Location = "L" };
 
-        _mockService.Setup(s => s.GetByIdAsync("1", It.IsAny<CancellationToken>()))
+        MockService.Setup(s => s.GetByIdAsync("1", It.IsAny<CancellationToken>()))
                     .ReturnsAsync(model);
 
-        var result = await _controller.GetBasicByIdAsync("1");
+        var result = await Controller.GetBasicByIdAsync("1");
 
         var ok = Assert.IsType<OkObjectResult>(result);
         var dto = Assert.IsType<Dto.BasicDto>(ok.Value);
@@ -24,10 +24,10 @@ public class GetByIdAsyncTests : BasicControllerTestsBase
     [Fact]
     public async Task GetByIdAsyncReturnsNotFoundWhenNull()
     {
-        _mockService.Setup(s => s.GetByIdAsync("2", It.IsAny<CancellationToken>()))
+        MockService.Setup(s => s.GetByIdAsync("2", It.IsAny<CancellationToken>()))
                     .ReturnsAsync((BasicModel?)null);
 
-        var result = await _controller.GetBasicByIdAsync("2");
+        var result = await Controller.GetBasicByIdAsync("2");
 
         Assert.IsType<NotFoundResult>(result);
     }

@@ -27,9 +27,11 @@ public class BasicDao : IBasicDao
 
     private void CreateNameIndex()
     {
+        _logger.LogInformation("Creating Name index on BasicModel collection");
         var keys = Builders<BasicModel>.IndexKeys.Ascending(x => x.Name);
         var model = new CreateIndexModel<BasicModel>(keys, new CreateIndexOptions { Unique = false });
         _collection.Indexes.CreateOne(model);
+        _logger.LogInformation("Created Name index");
     }
 
     private void CreateLocationDateIndex()
@@ -64,18 +66,57 @@ public class BasicDao : IBasicDao
     }
 
     public async Task<BasicModel> GetByIdAsync(string id, CancellationToken cancellationToken = default)
-        => await _collection.Find(x => x.Id == id).FirstOrDefaultAsync(cancellationToken);
-
-    public async Task<BasicModel> CreateAsync(BasicModel model, CancellationToken cancellationToken = default)
     {
-        model.Id = Guid.NewGuid().ToString();
-        await _collection.InsertOneAsync(model, cancellationToken: cancellationToken);
+        _logger.LogInformation("Fetching BasicModel by Id: {Id}", id);
+        var model = await _collection.Find(x => x.Id == id).FirstOrDefaultAsync(cancellationToken);
+        if (model == null)
+        {
+            _logger.LogWarning("No BasicModel found with Id: {Id}", id);
+        }
+
         return model;
     }
 
+
+    public async Task<BasicModel> CreateAsync(BasicModel model, CancellationToken cancellationToken = default)
+    {
+        _logger.LogInformation("Creating a new BasicModel with Name: {Name}", model.Name);
+
+        model.Id = Guid.NewGuid().ToString();
+        try
+        {
+            await _collection.InsertOneAsync(model, cancellationToken: cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to insert BasicModel with Name: {Name}", model.Name);
+            throw;
+        }
+
+        _logger.LogInformation("Created BasicModel with Id: {Id}", model.Id);
+        return model;
+    }
+
+
     public async Task UpdateAsync(string id, BasicModel model, CancellationToken cancellationToken = default)
-        => await _collection.ReplaceOneAsync(x => x.Id == id, model, cancellationToken: cancellationToken);
+    {
+        _logger.LogInformation("Updating BasicModel with Id: {Id}", id);
+        var result = await _collection.ReplaceOneAsync(x => x.Id == id, model, cancellationToken: cancellationToken);
+
+        if (result.MatchedCount == 0)
+        {
+            _logger.LogWarning("No BasicModel matched for update with Id: {Id}", id);
+        }
+    }
 
     public async Task DeleteAsync(string id, CancellationToken cancellationToken = default)
-        => await _collection.DeleteOneAsync(x => x.Id == id, cancellationToken);
+    {
+        _logger.LogInformation("Deleting BasicModel with Id: {Id}", id);
+        var result = await _collection.DeleteOneAsync(x => x.Id == id, cancellationToken);
+        if (result.DeletedCount == 0)
+        {
+            _logger.LogWarning("No BasicModel matched for delete with Id: {Id}", id);
+        }
+    }
+
 }

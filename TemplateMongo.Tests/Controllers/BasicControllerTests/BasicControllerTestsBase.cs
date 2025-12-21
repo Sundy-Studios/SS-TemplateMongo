@@ -6,12 +6,12 @@ using TemplateMongo.Services.Interfaces;
 
 public abstract class BasicControllerTestsBase
 {
-    protected readonly Mock<IBasicService> _mockService;
-    protected readonly BasicController _controller;
+    protected Mock<IBasicService> MockService { get; }
+    protected BasicController Controller { get; }
 
     protected BasicControllerTestsBase()
     {
-        _mockService = new Mock<IBasicService>();
-        _controller = new BasicController(_mockService.Object);
+        MockService = new Mock<IBasicService>();
+        Controller = new BasicController(MockService.Object);
     }
 }

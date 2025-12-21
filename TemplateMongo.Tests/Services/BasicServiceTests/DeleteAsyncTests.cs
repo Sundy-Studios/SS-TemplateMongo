@@ -9,8 +9,8 @@ public class DeleteAsyncTests : BasicServiceTestsBase
     {
         var id = "1";
 
-        await _service.DeleteAsync(id);
+        await Service.DeleteAsync(id);
 
-        _mockDomain.Verify(d => d.DeleteAsync(id, It.IsAny<CancellationToken>()), Times.Once);
+        MockDomain.Verify(d => d.DeleteAsync(id, It.IsAny<CancellationToken>()), Times.Once);
     }
 }

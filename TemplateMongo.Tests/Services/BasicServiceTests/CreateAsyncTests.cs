@@ -11,10 +11,10 @@ public class CreateAsyncTests : BasicServiceTestsBase
         var inputModel = new BasicModel { Name = "NewItem" };
         var createdModel = new BasicModel { Id = "1", Name = "NewItem" };
 
-        _mockDomain.Setup(d => d.CreateAsync(inputModel, It.IsAny<CancellationToken>()))
+        MockDomain.Setup(d => d.CreateAsync(inputModel, It.IsAny<CancellationToken>()))
                    .ReturnsAsync(createdModel);
 
-        var result = await _service.CreateAsync(inputModel);
+        var result = await Service.CreateAsync(inputModel);
 
         Assert.NotNull(result);
         Assert.Equal("1", result.Id);
@@ -26,8 +26,8 @@ public class CreateAsyncTests : BasicServiceTestsBase
     {
         var inputModel = new BasicModel { Name = "NewItem" };
 
-        await _service.CreateAsync(inputModel);
+        await Service.CreateAsync(inputModel);
 
-        _mockDomain.Verify(d => d.CreateAsync(inputModel, It.IsAny<CancellationToken>()), Times.Once);
+        MockDomain.Verify(d => d.CreateAsync(inputModel, It.IsAny<CancellationToken>()), Times.Once);
     }
 }

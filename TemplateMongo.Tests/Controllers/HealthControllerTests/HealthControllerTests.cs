@@ -7,7 +7,7 @@ public class HealthControllerTests : HealthControllerTestsBase
     [Fact]
     public void GetReturnsOkWithStatus()
     {
-        var result = _controller.Get();
+        var result = Controller.Get();
 
         var ok = Assert.IsType<OkObjectResult>(result);
         var obj = Assert.IsType<System.Text.Json.JsonElement>(System.Text.Json.JsonSerializer.SerializeToElement(ok.Value));

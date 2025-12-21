@@ -10,13 +10,13 @@ public class DeleteAsyncTests : BasicDomainTestsBase
         // Arrange
         var id = "1";
 
-        _mockDao.Setup(d => d.DeleteAsync(id, It.IsAny<CancellationToken>()))
+        MockDao.Setup(d => d.DeleteAsync(id, It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
         // Act
-        await _domain.DeleteAsync(id);
+        await Domain.DeleteAsync(id);
 
         // Assert
-        _mockDao.Verify(d => d.DeleteAsync(id, It.IsAny<CancellationToken>()), Times.Once);
+        MockDao.Verify(d => d.DeleteAsync(id, It.IsAny<CancellationToken>()), Times.Once);
     }
 }

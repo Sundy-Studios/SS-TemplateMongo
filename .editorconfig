@@ -416,8 +416,9 @@ dotnet_naming_rule.parameters_rule.symbols              = parameters_group
 dotnet_naming_rule.parameters_rule.style                = camel_case_style
 dotnet_naming_rule.parameters_rule.severity             = warning
 
-[*.{cs,vb}]
-dotnet_diagnostic.CA1051.severity = none
+# Disable warning CA1873 (expensive log argument evaluation)
+dotnet_diagnostic.CA1873.severity = none
+dotnet_diagnostic.CA1848.severity = none
 
 ##########################################
 # License

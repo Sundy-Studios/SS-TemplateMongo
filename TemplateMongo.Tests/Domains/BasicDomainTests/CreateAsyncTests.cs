@@ -12,11 +12,11 @@ public class CreateAsyncTests : BasicDomainTestsBase
         var inputModel = new BasicModel { Name = "NewItem" };
         var createdModel = new BasicModel { Id = "1", Name = "NewItem" };
 
-        _mockDao.Setup(d => d.CreateAsync(inputModel, It.IsAny<CancellationToken>()))
+        MockDao.Setup(d => d.CreateAsync(inputModel, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(createdModel);
 
         // Act
-        var result = await _domain.CreateAsync(inputModel);
+        var result = await Domain.CreateAsync(inputModel);
 
         // Assert
         Assert.NotNull(result);
@@ -30,9 +30,9 @@ public class CreateAsyncTests : BasicDomainTestsBase
         var inputModel = new BasicModel { Name = "NewItem" };
 
         // Act
-        await _domain.CreateAsync(inputModel);
+        await Domain.CreateAsync(inputModel);
 
         // Assert
-        _mockDao.Verify(d => d.CreateAsync(inputModel, It.IsAny<CancellationToken>()), Times.Once);
+        MockDao.Verify(d => d.CreateAsync(inputModel, It.IsAny<CancellationToken>()), Times.Once);
     }
 }

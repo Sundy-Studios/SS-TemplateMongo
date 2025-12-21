@@ -13,12 +13,12 @@ public class CreateAsyncTests : BasicControllerTestsBase
     {
         var created = new BasicModel { Id = "1", Name = "N", Location = "L" };
 
-        _mockService.Setup(s => s.CreateAsync(It.IsAny<BasicModel>(), It.IsAny<CancellationToken>()))
+        MockService.Setup(s => s.CreateAsync(It.IsAny<BasicModel>(), It.IsAny<CancellationToken>()))
                     .ReturnsAsync(created);
 
         var param = new CreateBasicParams { Name = "N", Location = "L" };
 
-        var result = await _controller.CreateBasicAsync(param);
+        var result = await Controller.CreateBasicAsync(param);
 
         var createdResult = Assert.IsType<CreatedResult>(result);
         var returned = Assert.IsType<BasicDto>(createdResult.Value);

@@ -4,7 +4,7 @@ using TemplateMongo.Controllers;
 
 public abstract class HealthControllerTestsBase
 {
-    protected readonly HealthController _controller;
+    protected HealthController Controller { get; }
 
-    protected HealthControllerTestsBase() => _controller = new HealthController();
+    protected HealthControllerTestsBase() => Controller = new HealthController();
 }

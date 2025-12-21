@@ -10,9 +10,9 @@ public class DeleteAsyncTests : BasicControllerTestsBase
     {
         var id = "1";
 
-        var result = await _controller.DeleteBasicAsync(id);
+        var result = await Controller.DeleteBasicAsync(id);
 
         Assert.IsType<NoContentResult>(result);
-        _mockService.Verify(s => s.DeleteAsync("1", It.IsAny<CancellationToken>()), Times.Once);
+        MockService.Verify(s => s.DeleteAsync("1", It.IsAny<CancellationToken>()), Times.Once);
     }
 }

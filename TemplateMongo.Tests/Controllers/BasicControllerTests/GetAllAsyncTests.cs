@@ -15,10 +15,10 @@ public class GetAllAsyncTests : BasicControllerTestsBase
         var model = new BasicModel { Id = "1", Name = "A", Location = "L" };
         var paged = PagedResultFactory.Create([model], 1, 10, 1);
 
-        _mockService.Setup(s => s.GetAllAsync(It.IsAny<GetAllBasicParams>(), It.IsAny<CancellationToken>()))
+        MockService.Setup(s => s.GetAllAsync(It.IsAny<GetAllBasicParams>(), It.IsAny<CancellationToken>()))
                     .ReturnsAsync(paged);
 
-        var result = await _controller.GetAllAsync(new GetAllBasicParams());
+        var result = await Controller.GetAllAsync(new GetAllBasicParams());
 
         var ok = Assert.IsType<OkObjectResult>(result);
         var dtoPaged = Assert.IsType<PagedResult<BasicDto>>(ok.Value);
