@@ -1,14 +1,14 @@
+namespace TemplateMongo.Tests.Controllers.BasicControllerTests;
+
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using TemplateMongo.Models;
 using TemplateMongo.Parameters;
 
-namespace TemplateMongo.Tests.Controllers.BasicControllerTests;
-
 public class UpdateAsyncTests : BasicControllerTestsBase
 {
     [Fact]
-    public async Task UpdateBasicAsync_ReturnsOk()
+    public async Task UpdateBasicAsyncReturnsOk()
     {
         var model = new BasicModel { Id = "1", Name = "N", Location = "L" };
 
@@ -21,7 +21,7 @@ public class UpdateAsyncTests : BasicControllerTestsBase
         var result = await _controller.UpdateBasicAsync(id, param);
 
         var ok = Assert.IsType<OkObjectResult>(result);
-        var returned = Assert.IsType<TemplateMongo.Dto.BasicDto>(ok.Value);
+        var returned = Assert.IsType<Dto.BasicDto>(ok.Value);
         Assert.Equal("1", returned.Id);
     }
 }

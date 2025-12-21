@@ -1,12 +1,12 @@
+namespace TemplateMongo.Tests.Services.BasicServiceTests;
+
 using Moq;
 using TemplateMongo.Models;
-
-namespace TemplateMongo.Tests.Services.BasicServiceTests;
 
 public class UpdateAsyncTests : BasicServiceTestsBase
 {
     [Fact]
-    public async Task UpdateAsync_ForwardsIdAndReturnsUpdated()
+    public async Task UpdateAsyncForwardsIdAndReturnsUpdated()
     {
         var model = new BasicModel { Name = "Updated" };
         var updated = new BasicModel { Id = "1", Name = "Updated" };

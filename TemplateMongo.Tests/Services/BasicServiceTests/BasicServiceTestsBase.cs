@@ -1,9 +1,9 @@
+namespace TemplateMongo.Tests.Services.BasicServiceTests;
+
 using Microsoft.Extensions.Logging;
 using Moq;
 using TemplateMongo.Domains.Interfaces;
 using TemplateMongo.Services;
-
-namespace TemplateMongo.Tests.Services.BasicServiceTests;
 
 public abstract class BasicServiceTestsBase
 {

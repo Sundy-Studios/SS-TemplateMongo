@@ -1,12 +1,12 @@
+namespace TemplateMongo.Tests.Domains.BasicDomainTests;
+
 using Moq;
 using TemplateMongo.Models;
-
-namespace TemplateMongo.Tests.Domains.BasicDomainTests;
 
 public class UpdateAsyncTests : BasicDomainTestsBase
 {
     [Fact]
-    public async Task UpdateAsync_ReturnsUpdatedModel()
+    public async Task UpdateAsyncReturnsUpdatedModel()
     {
         // Arrange
         var id = "1";
@@ -26,7 +26,7 @@ public class UpdateAsyncTests : BasicDomainTestsBase
     }
 
     [Fact]
-    public async Task UpdateAsync_CallsDaoOnceWithIdSet()
+    public async Task UpdateAsyncCallsDaoOnceWithIdSet()
     {
         var id = "1";
         var inputModel = new BasicModel { Name = "UpdatedItem" };

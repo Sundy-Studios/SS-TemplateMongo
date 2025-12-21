@@ -10,7 +10,7 @@ using TemplateMongo.Domains.Interfaces;
 using TemplateMongo.Services;
 using TemplateMongo.Services.Interfaces;
 
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddFirebaseAuth(builder.Configuration);
 
@@ -60,24 +60,16 @@ builder.Services.AddSwaggerGen(options =>
 
 if (builder.Environment.IsDevelopment())
 {
-    builder.Services.AddCors(options =>
-    {
-        options.AddPolicy("DevCors", policy =>
-        {
-            policy.WithOrigins("http://localhost:3000")
+    builder.Services.AddCors(options => options.AddPolicy("DevCors", policy => policy.WithOrigins("http://localhost:3000")
                   .AllowAnyHeader()
                   .AllowAnyMethod()
-                  .AllowCredentials();
-        });
-    });
+                  .AllowCredentials()));
 }
 
-WebApplication app = builder.Build();
+var app = builder.Build();
 
 // Global Exception Handling Middleware
-app.UseExceptionHandler(errorApp =>
-{
-    errorApp.Run(async context =>
+app.UseExceptionHandler(errorApp => errorApp.Run(async context =>
     {
         context.Response.ContentType = "application/json";
 
@@ -107,8 +99,7 @@ app.UseExceptionHandler(errorApp =>
         };
 
         await context.Response.WriteAsJsonAsync(response);
-    });
-});
+    }));
 
 
 if (app.Environment.IsDevelopment())

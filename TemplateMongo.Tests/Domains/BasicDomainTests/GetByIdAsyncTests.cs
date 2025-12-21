@@ -1,12 +1,12 @@
+namespace TemplateMongo.Tests.Domains.BasicDomainTests;
+
 using Moq;
 using TemplateMongo.Models;
-
-namespace TemplateMongo.Tests.Domains.BasicDomainTests;
 
 public class GetByIdAsyncTests : BasicDomainTestsBase
 {
     [Fact]
-    public async Task GetByIdAsync_ReturnsModel()
+    public async Task GetByIdAsyncReturnsModel()
     {
         // Arrange
         var sampleModel = new BasicModel { Id = "1", Name = "Test" };
@@ -23,7 +23,7 @@ public class GetByIdAsyncTests : BasicDomainTestsBase
     }
 
     [Fact]
-    public async Task GetByIdAsync_CallsDaoOnceWithCorrectId()
+    public async Task GetByIdAsyncCallsDaoOnceWithCorrectId()
     {
         await _domain.GetByIdAsync("1");
 

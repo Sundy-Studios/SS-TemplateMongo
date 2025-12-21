@@ -1,10 +1,10 @@
+namespace TemplateMongo.Dao;
+
 using Common.Paging;
 using MongoDB.Driver;
 using TemplateMongo.Dao.Interfaces;
 using TemplateMongo.Models;
 using TemplateMongo.Parameters;
-
-namespace TemplateMongo.Dao;
 
 public class BasicDao : IBasicDao
 {

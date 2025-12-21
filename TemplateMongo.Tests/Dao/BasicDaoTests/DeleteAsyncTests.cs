@@ -1,13 +1,13 @@
+namespace TemplateMongo.Tests.Dao.BasicDaoTests;
+
 using MongoDB.Driver;
 using Moq;
 using TemplateMongo.Models;
 
-namespace TemplateMongo.Tests.Dao.BasicDaoTests;
-
 public class DeleteAsyncTests : BasicDaoTestsBase
 {
     [Fact]
-    public async Task DeleteAsync_CallsDeleteOne()
+    public async Task DeleteAsyncCallsDeleteOne()
     {
         var id = "deleteMe";
 

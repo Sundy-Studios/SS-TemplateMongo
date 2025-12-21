@@ -1,11 +1,11 @@
-using Moq;
-
 namespace TemplateMongo.Tests.Services.BasicServiceTests;
+
+using Moq;
 
 public class DeleteAsyncTests : BasicServiceTestsBase
 {
     [Fact]
-    public async Task DeleteAsync_CallsDomainOnce()
+    public async Task DeleteAsyncCallsDomainOnce()
     {
         var id = "1";
 

@@ -1,10 +1,10 @@
+namespace TemplateMongo.Services;
+
 using Common.Paging;
 using TemplateMongo.Domains.Interfaces;
 using TemplateMongo.Models;
 using TemplateMongo.Parameters;
 using TemplateMongo.Services.Interfaces;
-
-namespace TemplateMongo.Services;
 
 public class BasicService(
     ILogger<BasicService> logger,

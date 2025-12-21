@@ -1,7 +1,7 @@
+namespace TemplateMongo.Models;
+
 using TemplateMongo.Dto;
 using TemplateMongo.Parameters;
-
-namespace TemplateMongo.Models;
 
 public class BasicModel
 {
@@ -45,7 +45,9 @@ public class BasicModel
     public static BasicModel FromParams(CreateBasicParams parameters)
     {
         if (parameters == null)
+        {
             return null!;
+        }
 
         return new BasicModel
         {
@@ -58,7 +60,9 @@ public class BasicModel
     public static BasicModel FromParams(string id, UpdateBasicParams parameters)
     {
         if (parameters == null)
+        {
             return null!;
+        }
 
         return new BasicModel
         {

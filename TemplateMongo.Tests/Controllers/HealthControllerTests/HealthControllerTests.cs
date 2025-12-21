@@ -1,11 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace TemplateMongo.Tests.Controllers.HealthControllerTests;
+
+using Microsoft.AspNetCore.Mvc;
 
 public class HealthControllerTests : HealthControllerTestsBase
 {
     [Fact]
-    public void Get_ReturnsOkWithStatus()
+    public void GetReturnsOkWithStatus()
     {
         var result = _controller.Get();
 

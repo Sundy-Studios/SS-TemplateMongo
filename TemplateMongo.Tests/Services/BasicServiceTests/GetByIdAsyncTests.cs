@@ -1,12 +1,12 @@
+namespace TemplateMongo.Tests.Services.BasicServiceTests;
+
 using Moq;
 using TemplateMongo.Models;
-
-namespace TemplateMongo.Tests.Services.BasicServiceTests;
 
 public class GetByIdAsyncTests : BasicServiceTestsBase
 {
     [Fact]
-    public async Task GetByIdAsync_ReturnsModel_WhenFound()
+    public async Task GetByIdAsyncReturnsModelWhenFound()
     {
         var model = new BasicModel { Id = "1", Name = "Item" };
 
@@ -20,7 +20,7 @@ public class GetByIdAsyncTests : BasicServiceTestsBase
     }
 
     [Fact]
-    public async Task GetByIdAsync_ReturnsNull_WhenNotFound()
+    public async Task GetByIdAsyncReturnsNullWhenNotFound()
     {
         _mockDomain.Setup(d => d.GetByIdAsync("2", It.IsAny<CancellationToken>()))
                    .ReturnsAsync((BasicModel?)null);

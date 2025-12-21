@@ -1,13 +1,13 @@
+namespace TemplateMongo.Tests.Dao.BasicDaoTests;
+
 using MongoDB.Driver;
 using Moq;
 using TemplateMongo.Models;
 
-namespace TemplateMongo.Tests.Dao.BasicDaoTests;
-
 public class UpdateAsyncTests : BasicDaoTestsBase
 {
     [Fact]
-    public async Task UpdateAsync_CallsReplaceOne()
+    public async Task UpdateAsyncCallsReplaceOne()
     {
         var id = "xyz";
         var model = new BasicModel { Id = id, Name = "Updated" };

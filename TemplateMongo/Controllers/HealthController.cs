@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace TemplateMongo.Controllers;
+
+using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/health")]

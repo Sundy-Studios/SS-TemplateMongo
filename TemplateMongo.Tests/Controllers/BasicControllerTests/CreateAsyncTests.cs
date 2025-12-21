@@ -1,15 +1,15 @@
+namespace TemplateMongo.Tests.Controllers.BasicControllerTests;
+
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using TemplateMongo.Dto;
 using TemplateMongo.Models;
 using TemplateMongo.Parameters;
 
-namespace TemplateMongo.Tests.Controllers.BasicControllerTests;
-
 public class CreateAsyncTests : BasicControllerTestsBase
 {
     [Fact]
-    public async Task CreateBasicAsync_ReturnsCreated()
+    public async Task CreateBasicAsyncReturnsCreated()
     {
         var created = new BasicModel { Id = "1", Name = "N", Location = "L" };
 

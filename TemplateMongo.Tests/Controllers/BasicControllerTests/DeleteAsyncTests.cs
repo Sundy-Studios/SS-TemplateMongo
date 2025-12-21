@@ -1,12 +1,12 @@
+namespace TemplateMongo.Tests.Controllers.BasicControllerTests;
+
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-
-namespace TemplateMongo.Tests.Controllers.BasicControllerTests;
 
 public class DeleteAsyncTests : BasicControllerTestsBase
 {
     [Fact]
-    public async Task DeleteBasicAsync_ReturnsNoContent()
+    public async Task DeleteBasicAsyncReturnsNoContent()
     {
         var id = "1";
 

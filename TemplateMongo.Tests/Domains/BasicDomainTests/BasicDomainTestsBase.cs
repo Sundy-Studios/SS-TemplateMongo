@@ -1,9 +1,9 @@
+namespace TemplateMongo.Tests.Domains.BasicDomainTests;
+
 using Microsoft.Extensions.Logging;
 using Moq;
 using TemplateMongo.Dao.Interfaces;
 using TemplateMongo.Domains;
-
-namespace TemplateMongo.Tests.Domains.BasicDomainTests;
 
 public abstract class BasicDomainTestsBase
 {

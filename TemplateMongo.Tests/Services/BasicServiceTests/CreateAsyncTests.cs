@@ -1,12 +1,12 @@
+namespace TemplateMongo.Tests.Services.BasicServiceTests;
+
 using Moq;
 using TemplateMongo.Models;
-
-namespace TemplateMongo.Tests.Services.BasicServiceTests;
 
 public class CreateAsyncTests : BasicServiceTestsBase
 {
     [Fact]
-    public async Task CreateAsync_ReturnsCreatedModel()
+    public async Task CreateAsyncReturnsCreatedModel()
     {
         var inputModel = new BasicModel { Name = "NewItem" };
         var createdModel = new BasicModel { Id = "1", Name = "NewItem" };
@@ -22,7 +22,7 @@ public class CreateAsyncTests : BasicServiceTestsBase
     }
 
     [Fact]
-    public async Task CreateAsync_CallsDomainOnce()
+    public async Task CreateAsyncCallsDomainOnce()
     {
         var inputModel = new BasicModel { Name = "NewItem" };
 

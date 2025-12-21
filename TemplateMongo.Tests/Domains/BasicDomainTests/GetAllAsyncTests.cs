@@ -1,20 +1,20 @@
+namespace TemplateMongo.Tests.Domains.BasicDomainTests;
+
 using Common.Paging;
 using Moq;
 using TemplateMongo.Models;
 using TemplateMongo.Parameters;
 
-namespace TemplateMongo.Tests.Domains.BasicDomainTests;
-
 public class GetAllAsyncTests : BasicDomainTestsBase
 {
     [Fact]
-    public async Task GetAllAsync_ReturnsPagedResult()
+    public async Task GetAllAsyncReturnsPagedResult()
     {
         // Arrange
         var sampleList = new List<BasicModel>
         {
-            new BasicModel { Id = "1", Name = "Test1" },
-            new BasicModel { Id = "2", Name = "Test2" }
+            new() { Id = "1", Name = "Test1" },
+            new() { Id = "2", Name = "Test2" }
         };
 
         var pagedResult = PagedResultFactory.Create(sampleList, 1, 10, sampleList.Count);
@@ -43,7 +43,7 @@ public class GetAllAsyncTests : BasicDomainTestsBase
     }
 
     [Fact]
-    public async Task GetAllAsync_CallsDaoOnce()
+    public async Task GetAllAsyncCallsDaoOnce()
     {
         var parameters = new GetAllBasicParams();
         await _domain.GetAllAsync(parameters);

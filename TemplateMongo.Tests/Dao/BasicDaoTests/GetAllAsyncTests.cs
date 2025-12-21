@@ -1,19 +1,19 @@
+namespace TemplateMongo.Tests.Dao.BasicDaoTests;
+
 using MongoDB.Driver;
 using Moq;
 using TemplateMongo.Models;
 using TemplateMongo.Parameters;
 
-namespace TemplateMongo.Tests.Dao.BasicDaoTests;
-
 public class GetAllAsyncTests : BasicDaoTestsBase
 {
     [Fact]
-    public async Task GetAllAsync_ReturnsAllModels()
+    public async Task GetAllAsyncReturnsAllModels()
     {
         var models = new List<BasicModel>
         {
-            new BasicModel { Id = "1", Name = "A" },
-            new BasicModel { Id = "2", Name = "B" }
+            new() { Id = "1", Name = "A" },
+            new() { Id = "2", Name = "B" }
         };
 
         var mockCursor = CreateMockCursor(models);
