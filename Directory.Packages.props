@@ -15,6 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageVersion Include="SS.Common" Version="1.1.0-notick-updateeditorconfig.531c4f76" />
+    <PackageVersion Include="SS.Common" Version="1.1.0" />
   </ItemGroup>
 </Project>
