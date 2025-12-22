@@ -1,20 +1,20 @@
+namespace TemplateMongo.Tests.Domains.BasicDomainTests;
+
 using Microsoft.Extensions.Logging;
 using Moq;
 using TemplateMongo.Dao.Interfaces;
 using TemplateMongo.Domains;
 
-namespace TemplateMongo.Tests.Domains.BasicDomainTests;
-
 public abstract class BasicDomainTestsBase
 {
-    protected readonly Mock<IBasicDao> _mockDao;
-    protected readonly Mock<ILogger<BasicDomain>> _mockLogger;
-    protected readonly BasicDomain _domain;
+    protected Mock<IBasicDao> MockDao { get; }
+    protected Mock<ILogger<BasicDomain>> MockLogger { get; }
+    protected BasicDomain Domain { get; }
 
     protected BasicDomainTestsBase()
     {
-        _mockDao = new Mock<IBasicDao>();
-        _mockLogger = new Mock<ILogger<BasicDomain>>();
-        _domain = new BasicDomain(_mockLogger.Object, _mockDao.Object);
+        MockDao = new Mock<IBasicDao>();
+        MockLogger = new Mock<ILogger<BasicDomain>>();
+        Domain = new BasicDomain(MockLogger.Object, MockDao.Object);
     }
 }

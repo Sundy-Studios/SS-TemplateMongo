@@ -1,25 +1,25 @@
+namespace TemplateMongo.Tests.Domains.BasicDomainTests;
+
 using Common.Paging;
 using Moq;
 using TemplateMongo.Models;
 using TemplateMongo.Parameters;
 
-namespace TemplateMongo.Tests.Domains.BasicDomainTests;
-
 public class GetAllAsyncTests : BasicDomainTestsBase
 {
     [Fact]
-    public async Task GetAllAsync_ReturnsPagedResult()
+    public async Task GetAllAsyncReturnsPagedResult()
     {
         // Arrange
         var sampleList = new List<BasicModel>
         {
-            new BasicModel { Id = "1", Name = "Test1" },
-            new BasicModel { Id = "2", Name = "Test2" }
+            new() { Id = "1", Name = "Test1" },
+            new() { Id = "2", Name = "Test2" }
         };
 
-        var pagedResult = PagedResult<BasicModel>.Create(sampleList, 1, 10, sampleList.Count);
+        var pagedResult = PagedResultFactory.Create(sampleList, 1, 10, sampleList.Count);
 
-        _mockDao.Setup(d => d.GetAllAsync(It.IsAny<GetAllBasicParams>(), It.IsAny<CancellationToken>()))
+        MockDao.Setup(d => d.GetAllAsync(It.IsAny<GetAllBasicParams>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(pagedResult);
 
         var parameters = new GetAllBasicParams
@@ -29,7 +29,9 @@ public class GetAllAsyncTests : BasicDomainTestsBase
         };
 
         // Act
-        var result = await _domain.GetAllAsync(parameters);
+        var result = await Domain.GetAllAsync(parameters);
+
+        MockDao.Verify(d => d.GetAllAsync(It.IsAny<GetAllBasicParams>(), It.IsAny<CancellationToken>()), Times.Once);
 
         // Assert
         Assert.NotNull(result);
@@ -40,14 +42,5 @@ public class GetAllAsyncTests : BasicDomainTestsBase
         Assert.Equal(1, result.TotalPages);
         Assert.Equal("Test1", result.Items[0].Name);
         Assert.Equal("Test2", result.Items[1].Name);
-    }
-
-    [Fact]
-    public async Task GetAllAsync_CallsDaoOnce()
-    {
-        var parameters = new GetAllBasicParams();
-        await _domain.GetAllAsync(parameters);
-
-        _mockDao.Verify(d => d.GetAllAsync(It.IsAny<GetAllBasicParams>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

@@ -1,24 +1,18 @@
+namespace TemplateMongo.Controllers;
+
 using Common.Paging;
 using Common.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TemplateMongo.Dto;
 using TemplateMongo.Models;
 using TemplateMongo.Parameters;
 using TemplateMongo.Services.Interfaces;
 
-namespace TemplateMongo.Controllers;
-
 [ApiController]
 [Route("api/[controller]")]
-public class BasicController : ControllerBase
+public class BasicController(IBasicService service) : ControllerBase
 {
-    private readonly IBasicService _service;
-
-    public BasicController(IBasicService service)
-    {
-        _service = service;
-    }
+    private readonly IBasicService _service = service;
 
     [HttpGet]
     public async Task<IActionResult> GetAllAsync([FromQuery] GetAllBasicParams parameters)
@@ -27,7 +21,7 @@ public class BasicController : ControllerBase
 
         var dtoItems = result.Items.Select(BasicModel.ToDto).ToList();
 
-        var dtoResult = PagedResult<BasicDto>.Create(
+        var dtoResult = PagedResultFactory.Create(
             dtoItems,
             result.PageNumber,
             result.PageSize,
@@ -70,8 +64,8 @@ public class BasicController : ControllerBase
         Guard.AgainstNullOrWhiteSpace(parameters.Name, nameof(parameters.Name));
         Guard.AgainstNullOrWhiteSpace(parameters.Location, nameof(parameters.Location));
 
-        var basicModel = await _service.UpdateAsync(id, BasicModel.FromParams(id, parameters));
-        return Ok(BasicModel.ToDto(basicModel));
+        await _service.UpdateAsync(id, BasicModel.FromParams(id, parameters));
+        return NoContent();
     }
 
     [Authorize]

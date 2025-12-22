@@ -1,20 +1,20 @@
+namespace TemplateMongo.Tests.Domains.BasicDomainTests;
+
 using Moq;
 using TemplateMongo.Models;
-
-namespace TemplateMongo.Tests.Domains.BasicDomainTests;
 
 public class GetByIdAsyncTests : BasicDomainTestsBase
 {
     [Fact]
-    public async Task GetByIdAsync_ReturnsModel()
+    public async Task GetByIdAsyncReturnsModel()
     {
         // Arrange
         var sampleModel = new BasicModel { Id = "1", Name = "Test" };
-        _mockDao.Setup(d => d.GetByIdAsync("1", It.IsAny<CancellationToken>()))
+        MockDao.Setup(d => d.GetByIdAsync("1", It.IsAny<CancellationToken>()))
                 .ReturnsAsync(sampleModel);
 
         // Act
-        var result = await _domain.GetByIdAsync("1");
+        var result = await Domain.GetByIdAsync("1");
 
         // Assert
         Assert.NotNull(result);
@@ -23,10 +23,10 @@ public class GetByIdAsyncTests : BasicDomainTestsBase
     }
 
     [Fact]
-    public async Task GetByIdAsync_CallsDaoOnceWithCorrectId()
+    public async Task GetByIdAsyncCallsDaoOnceWithCorrectId()
     {
-        await _domain.GetByIdAsync("1");
+        await Domain.GetByIdAsync("1");
 
-        _mockDao.Verify(d => d.GetByIdAsync("1", It.IsAny<CancellationToken>()), Times.Once);
+        MockDao.Verify(d => d.GetByIdAsync("1", It.IsAny<CancellationToken>()), Times.Once);
     }
 }

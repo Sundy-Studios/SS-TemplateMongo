@@ -1,16 +1,16 @@
-using Moq;
-
 namespace TemplateMongo.Tests.Services.BasicServiceTests;
+
+using Moq;
 
 public class DeleteAsyncTests : BasicServiceTestsBase
 {
     [Fact]
-    public async Task DeleteAsync_CallsDomainOnce()
+    public async Task DeleteAsyncCallsDomainOnce()
     {
         var id = "1";
 
-        await _service.DeleteAsync(id);
+        await Service.DeleteAsync(id);
 
-        _mockDomain.Verify(d => d.DeleteAsync(id, It.IsAny<CancellationToken>()), Times.Once);
+        MockDomain.Verify(d => d.DeleteAsync(id, It.IsAny<CancellationToken>()), Times.Once);
     }
 }

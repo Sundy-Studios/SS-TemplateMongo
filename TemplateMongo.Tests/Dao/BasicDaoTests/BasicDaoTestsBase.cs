@@ -1,8 +1,8 @@
+namespace TemplateMongo.Tests.Dao.BasicDaoTests;
+
 using Common.Testing.Mongo;
 using TemplateMongo.Dao;
 using TemplateMongo.Models;
-
-namespace TemplateMongo.Tests.Dao.BasicDaoTests;
 
 public abstract class BasicDaoTestsBase : MongoDaoTestsBase<BasicModel, BasicDao>
 {

@@ -1,4 +1,4 @@
-﻿namespace TemplateMongo.Client;
+namespace TemplateMongo.Client;
 
 public class Class1
 {

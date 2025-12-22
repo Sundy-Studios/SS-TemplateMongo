@@ -1,18 +1,18 @@
+namespace TemplateMongo.Tests.Controllers.BasicControllerTests;
+
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-
-namespace TemplateMongo.Tests.Controllers.BasicControllerTests;
 
 public class DeleteAsyncTests : BasicControllerTestsBase
 {
     [Fact]
-    public async Task DeleteBasicAsync_ReturnsNoContent()
+    public async Task DeleteBasicAsyncReturnsNoContent()
     {
         var id = "1";
 
-        var result = await _controller.DeleteBasicAsync(id);
+        var result = await Controller.DeleteBasicAsync(id);
 
         Assert.IsType<NoContentResult>(result);
-        _mockService.Verify(s => s.DeleteAsync("1", It.IsAny<CancellationToken>()), Times.Once);
+        MockService.Verify(s => s.DeleteAsync(id, It.IsAny<CancellationToken>()), Times.Once);
     }
 }
