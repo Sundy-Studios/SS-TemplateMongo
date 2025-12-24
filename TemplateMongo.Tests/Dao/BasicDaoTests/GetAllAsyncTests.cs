@@ -2,8 +2,8 @@ namespace TemplateMongo.Tests.Dao.BasicDaoTests;
 
 using MongoDB.Driver;
 using Moq;
-using TemplateMongo.Models;
 using TemplateMongo.Client.Parameters;
+using TemplateMongo.Models;
 
 public class GetAllAsyncTests : BasicDaoTestsBase
 {

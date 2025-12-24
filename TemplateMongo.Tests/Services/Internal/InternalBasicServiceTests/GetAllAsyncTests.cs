@@ -2,8 +2,8 @@ namespace TemplateMongo.Tests.Services.InternalBasicServiceTests;
 
 using Common.Paging;
 using Moq;
-using TemplateMongo.Models;
 using TemplateMongo.Client.Parameters;
+using TemplateMongo.Models;
 
 public class GetAllAsyncTests : InternalBasicServiceTestsBase
 {

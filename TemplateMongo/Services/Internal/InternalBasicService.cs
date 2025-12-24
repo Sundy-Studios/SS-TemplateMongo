@@ -1,9 +1,9 @@
 namespace TemplateMongo.Services.Internal;
 
 using Common.Paging;
+using TemplateMongo.Client.Parameters;
 using TemplateMongo.Domains.Interfaces;
 using TemplateMongo.Models;
-using TemplateMongo.Client.Parameters;
 using TemplateMongo.Services.Internal.Interfaces;
 
 public class InternalBasicService(

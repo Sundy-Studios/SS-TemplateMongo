@@ -11,7 +11,7 @@ using TemplateMongo.Services.Internal;
 using TemplateMongo.Services.Internal.Interfaces;
 using TemplateMongo.Client.Services;
 using TemplateMongo.Services.Isekai;
-using TemplateMongo.Startup;
+using Common.Startup;
 using Common.Swagger;
 
 Console.WriteLine($"Mongo Template...");
@@ -124,7 +124,6 @@ try
 
     app.UseFirebaseAuth();
     app.MapIsekaiEndpoints();
-    // app.MapControllers();
 
     app.Run();
 }

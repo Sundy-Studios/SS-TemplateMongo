@@ -1,10 +1,10 @@
 namespace TemplateMongo.Domains;
 
 using Common.Paging;
+using TemplateMongo.Client.Parameters;
 using TemplateMongo.Dao.Interfaces;
 using TemplateMongo.Domains.Interfaces;
 using TemplateMongo.Models;
-using TemplateMongo.Client.Parameters;
 
 public class BasicDomain(ILogger<BasicDomain> logger, IBasicDao dao) : IBasicDomain
 {
