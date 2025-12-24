@@ -1,9 +1,9 @@
-namespace TemplateMongo.Tests.Services.IsekaiBasicServiceTests;
+namespace TemplateMongo.Tests.Services.Isekai.BasicServiceTests;
 
 using Moq;
 using TemplateMongo.Models;
 
-public class GetByIdAsyncTests : IsekaiBasicServiceTestsBase
+public class GetByIdAsyncTests : BasicServiceTestsBase
 {
     [Fact]
     public async Task GetByIdAsyncReturnsDtoWhenFound()

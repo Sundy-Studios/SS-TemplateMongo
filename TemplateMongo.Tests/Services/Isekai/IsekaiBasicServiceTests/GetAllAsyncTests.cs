@@ -1,16 +1,16 @@
-namespace TemplateMongo.Tests.Services.IsekaiBasicServiceTests;
+namespace TemplateMongo.Tests.Services.Isekai.BasicServiceTests;
 
 using Common.Paging;
 using Moq;
 using TemplateMongo.Client.Parameters;
 using TemplateMongo.Models;
 
-public class GetAllAsyncTests : IsekaiBasicServiceTestsBase
+public class GetAllAsyncTests : BasicServiceTestsBase
 {
     [Fact]
     public async Task GetAllAsyncReturnsPagedResult()
     {
-        var paged = PagedResultFactory.Create(new[] { new BasicModel { Id = "1", Name = "A" } }, 1, 10, 1);
+        var paged = PagedResultFactory.Create([new BasicModel { Id = "1", Name = "A" }], 1, 10, 1);
 
         MockInternalService.Setup(d => d.GetAllAsync(It.IsAny<GetAllBasicParams>(), It.IsAny<CancellationToken>()))
                            .ReturnsAsync(paged);

@@ -1,10 +1,10 @@
-namespace TemplateMongo.Tests.Services.IsekaiBasicServiceTests;
+namespace TemplateMongo.Tests.Services.Isekai.BasicServiceTests;
 
 using Moq;
 using TemplateMongo.Client.Parameters;
 using TemplateMongo.Models;
 
-public class CreateAsyncTests : IsekaiBasicServiceTestsBase
+public class CreateAsyncTests : BasicServiceTestsBase
 {
     [Fact]
     public async Task CreateAsyncReturnsDto()

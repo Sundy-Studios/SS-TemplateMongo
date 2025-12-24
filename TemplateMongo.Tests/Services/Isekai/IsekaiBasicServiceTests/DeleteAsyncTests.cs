@@ -1,8 +1,8 @@
-namespace TemplateMongo.Tests.Services.IsekaiBasicServiceTests;
+namespace TemplateMongo.Tests.Services.Isekai.BasicServiceTests;
 
 using Moq;
 
-public class DeleteAsyncTests : IsekaiBasicServiceTestsBase
+public class DeleteAsyncTests : BasicServiceTestsBase
 {
     [Fact]
     public async Task DeleteAsyncCallsInternalService()

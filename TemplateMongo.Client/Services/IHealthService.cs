@@ -8,5 +8,5 @@ public interface IHealthService : IIsekaiService
 {
     [IsekaiPath("api/health", IsekaiHttpMethod.Get)]
     [IsekaiMethodTimeout(IsekaiMethodTimeout.Low)]
-    public Task Get();
+    public Task GetHealth();
 }

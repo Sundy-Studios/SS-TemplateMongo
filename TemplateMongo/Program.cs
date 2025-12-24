@@ -1,18 +1,18 @@
 using System.Net;
 using Common.Auth;
+using Common.Startup;
+using Common.Swagger;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
+using TemplateMongo.Client.Services;
 using TemplateMongo.Dao;
 using TemplateMongo.Dao.Interfaces;
 using TemplateMongo.Domains;
 using TemplateMongo.Domains.Interfaces;
 using TemplateMongo.Services.Internal;
 using TemplateMongo.Services.Internal.Interfaces;
-using TemplateMongo.Client.Services;
 using TemplateMongo.Services.Isekai;
-using Common.Startup;
-using Common.Swagger;
 
 Console.WriteLine($"Mongo Template...");
 var builder = WebApplication.CreateBuilder(args);

@@ -1,13 +1,11 @@
-namespace TemplateMongo.Tests.Services.IsekaiHealthServiceTests;
+namespace TemplateMongo.Tests.Services.Isekai.HealthServiceTests;
 
-public class HealthServiceTests
+public class HealthServiceTests : HealthServiceTestsBase
 {
     [Fact]
     public async Task GetCompletesSuccessfully()
     {
-        var service = new TemplateMongo.Services.Isekai.HealthService();
-
-        await service.Get();
+        await Service.GetHealth();
 
         Assert.True(true);
     }

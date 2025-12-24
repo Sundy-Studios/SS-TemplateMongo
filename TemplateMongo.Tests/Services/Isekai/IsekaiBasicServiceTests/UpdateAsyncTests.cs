@@ -1,10 +1,10 @@
-namespace TemplateMongo.Tests.Services.IsekaiBasicServiceTests;
+namespace TemplateMongo.Tests.Services.Isekai.BasicServiceTests;
 
 using Moq;
 using TemplateMongo.Client.Parameters;
 using TemplateMongo.Models;
 
-public class UpdateAsyncTests : IsekaiBasicServiceTestsBase
+public class UpdateAsyncTests : BasicServiceTestsBase
 {
     [Fact]
     public async Task UpdateAsyncCallsInternalService()
