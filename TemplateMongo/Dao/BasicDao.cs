@@ -4,7 +4,7 @@ using Common.Paging;
 using MongoDB.Driver;
 using TemplateMongo.Dao.Interfaces;
 using TemplateMongo.Models;
-using TemplateMongo.Parameters;
+using TemplateMongo.Client.Parameters;
 
 public class BasicDao : IBasicDao
 {

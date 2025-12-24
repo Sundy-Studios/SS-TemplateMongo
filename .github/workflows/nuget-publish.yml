@@ -1,0 +1,84 @@
+name: Build & Publish NuGet
+
+on:
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - "TemplateMongo.Client/**"
+      - "Directory.Packages.props"
+      - "Directory.Build.props"
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - "**"
+    paths:
+      - "TemplateMongo.Client/**"
+      - "Directory.Packages.props"
+      - "Directory.Build.props"
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-pack:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Restore dependencies
+        run: dotnet restore TemplateMongo.Client/TemplateMongo.Client.csproj
+
+      - name: Determine version from csproj
+        run: |
+          BASE_VERSION=$(grep -oPm1 "(?<=<Version>)[^<]+" TemplateMongo.Client/TemplateMongo.Client.csproj)
+
+          if [[ -n "${GITHUB_HEAD_REF}" ]]; then
+              BRANCH_NAME="${GITHUB_HEAD_REF}"
+          else
+              BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          fi
+
+          BRANCH_NAME=$(echo "$BRANCH_NAME" | tr / - | tr '[:upper:]' '[:lower:]')
+
+          RAW=$(uuidgen | tr '[:upper:]' '[:lower:]')
+          SHORT=${RAW:0:8}
+
+          if [[ "$BRANCH_NAME" == "main" || "$BRANCH_NAME" == "master" ]]; then
+              VERSION="$BASE_VERSION"
+          else
+              VERSION="${BASE_VERSION}-${BRANCH_NAME}.${SHORT}"
+          fi
+
+          echo "PACKAGE_VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Using version $VERSION"
+
+      - name: Build & Pack
+        run: |
+          dotnet build TemplateMongo.Client/TemplateMongo.Client.csproj -c Release
+
+          dotnet pack TemplateMongo.Client/TemplateMongo.Client.csproj \
+            -c Release \
+            -p:PackageVersion=$PACKAGE_VERSION \
+            -p:IncludeBuildOutput=true \
+            -o ./nupkgs
+
+      - name: Push to Github Package
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
+        run: |
+          dotnet nuget push ./nupkgs/*.nupkg \
+            --source "https://nuget.pkg.github.com/Sundy-Studios/index.json" \
+            --api-key "$GITHUB_TOKEN" \
+            --skip-duplicate

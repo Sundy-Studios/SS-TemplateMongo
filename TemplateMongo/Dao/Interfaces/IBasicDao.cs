@@ -2,7 +2,7 @@ namespace TemplateMongo.Dao.Interfaces;
 
 using Common.Paging;
 using TemplateMongo.Models;
-using TemplateMongo.Parameters;
+using TemplateMongo.Client.Parameters;
 
 public interface IBasicDao
 {

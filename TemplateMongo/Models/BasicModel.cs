@@ -1,7 +1,7 @@
 namespace TemplateMongo.Models;
 
-using TemplateMongo.Dto;
-using TemplateMongo.Parameters;
+using TemplateMongo.Client.Dto;
+using TemplateMongo.Client.Parameters;
 
 public class BasicModel
 {

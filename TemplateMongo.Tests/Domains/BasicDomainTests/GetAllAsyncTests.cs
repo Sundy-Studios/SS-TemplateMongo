@@ -3,7 +3,7 @@ namespace TemplateMongo.Tests.Domains.BasicDomainTests;
 using Common.Paging;
 using Moq;
 using TemplateMongo.Models;
-using TemplateMongo.Parameters;
+using TemplateMongo.Client.Parameters;
 
 public class GetAllAsyncTests : BasicDomainTestsBase
 {
