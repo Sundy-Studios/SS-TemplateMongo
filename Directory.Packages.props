@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageVersion Include="SS.Common" Version="1.2.0-notick-clientsetup.46dc2f8e" />
+    <PackageVersion Include="SS.Common" Version="1.2.0-notick-clientsetup.1749c60a" />
   </ItemGroup>
 
 </Project>

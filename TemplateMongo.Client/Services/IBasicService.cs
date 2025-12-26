@@ -1,7 +1,7 @@
 namespace TemplateMongo.Client.Services;
 
 using System.Net;
-using Common.Exceptions.Responses;
+using Common.Exception.Contracts;
 using Common.Isekai.Attributes;
 using Common.Isekai.Services;
 using Common.Paging;
@@ -11,11 +11,11 @@ using TemplateMongo.Client.Parameters;
 [IsekaiGate("template-mongo-client", "basic")]
 [IsekaiConsumes("application/json")]
 [IsekaiProduces("application/json")]
-[IsekaiResponse((int)HttpStatusCode.BadRequest, typeof(ExceptionDetailsResponse), "The server could not understand the request due to invalid syntax.")]
-[IsekaiResponse((int)HttpStatusCode.Unauthorized, typeof(ExceptionDetailsResponse), "Network credentials are no longer valid.")]
-[IsekaiResponse((int)HttpStatusCode.Forbidden, typeof(ExceptionDetailsResponse), "The client does not have access rights to the content.")]
-[IsekaiResponse((int)HttpStatusCode.NotFound, typeof(ExceptionDetailsResponse), "The server can not find the requested resource.")]
-[IsekaiResponse((int)HttpStatusCode.InternalServerError, typeof(ExceptionResponse), "Internal server error")]
+[IsekaiResponse((int)HttpStatusCode.BadRequest, typeof(ErrorResponse), "The server could not understand the request due to invalid syntax.")]
+[IsekaiResponse((int)HttpStatusCode.Unauthorized, typeof(ErrorResponse), "Network credentials are no longer valid.")]
+[IsekaiResponse((int)HttpStatusCode.Forbidden, typeof(ErrorResponse), "The client does not have access rights to the content.")]
+[IsekaiResponse((int)HttpStatusCode.NotFound, typeof(ErrorResponse), "The server can not find the requested resource.")]
+[IsekaiResponse((int)HttpStatusCode.InternalServerError, typeof(ErrorResponse), "Internal server error")]
 public interface IBasicService : IIsekaiService
 {
     [IsekaiPath("api/basic", IsekaiHttpMethod.Get)]

@@ -1,12 +1,12 @@
 namespace TemplateMongo.Client.Services;
 
 using System.Net;
-using Common.Exceptions.Responses;
+using Common.Exception.Contracts;
 using Common.Isekai.Attributes;
 using Common.Isekai.Services;
 
 [IsekaiGate("template-mongo-client", "health")]
-[IsekaiResponse((int)HttpStatusCode.InternalServerError, typeof(ExceptionResponse), "Internal server error")]
+[IsekaiResponse((int)HttpStatusCode.InternalServerError, typeof(ErrorResponse), "Internal server error")]
 public interface IHealthService : IIsekaiService
 {
     [IsekaiPath("api/health", IsekaiHttpMethod.Get)]
