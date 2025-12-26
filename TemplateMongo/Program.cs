@@ -1,7 +1,7 @@
 using System.Net;
 using Common.Auth;
-using Common.Startup;
-using Common.Swagger;
+using Common.Isekai.Startup;
+using Common.Isekai.Swagger;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
@@ -124,6 +124,7 @@ try
 
     app.UseFirebaseAuth();
     app.MapIsekaiEndpoints();
+    app.MapControllers();
 
     app.Run();
 }
