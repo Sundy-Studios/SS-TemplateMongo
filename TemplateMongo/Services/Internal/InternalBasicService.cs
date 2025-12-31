@@ -7,7 +7,6 @@ using TemplateMongo.Client.Parameters;
 using TemplateMongo.Domains.Interfaces;
 using TemplateMongo.Models;
 using TemplateMongo.Services.Internal.Interfaces;
-using System.Text.Json;
 
 public class InternalBasicService(
     ILogger<InternalBasicService> logger,
