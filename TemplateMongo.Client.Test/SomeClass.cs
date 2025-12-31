@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using TemplateMongo.Client.Services;
 using TemplateMongo.Client.Parameters;
@@ -19,6 +20,8 @@ public sealed class SomeClass
             PageNumber = 1,
             PageSize = 10
         });
-        Console.WriteLine(items);
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(items, options);
+        Console.WriteLine(jsonString);
     }
 }

@@ -1,17 +1,22 @@
 namespace TemplateMongo.Services.Internal;
 
+using Common.Auth;
+using Common.Exception.Models;
 using Common.Paging;
 using TemplateMongo.Client.Parameters;
 using TemplateMongo.Domains.Interfaces;
 using TemplateMongo.Models;
 using TemplateMongo.Services.Internal.Interfaces;
+using System.Text.Json;
 
 public class InternalBasicService(
     ILogger<InternalBasicService> logger,
-    IBasicDomain domain) : IInternalBasicService
+    IBasicDomain domain,
+    ICurrentUser user) : IInternalBasicService
 {
     private readonly ILogger<InternalBasicService> _logger = logger;
     private readonly IBasicDomain _domain = domain;
+    private readonly ICurrentUser _user;
 
     public async Task<PagedResult<BasicModel>> GetAllAsync(GetAllBasicParams parameters, CancellationToken cancellationToken = default)
     {
@@ -92,6 +97,17 @@ public class InternalBasicService(
     public async Task DeleteAsync(string id, CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Deleting BasicModel with Id: {Id}", id);
+
+        _logger.LogInformation("Current User: {User}", JsonSerializer.Serialize(_user, new JsonSerializerOptions
+        {
+            WriteIndented = true
+        }));
+
+        if (_user?.EmailVerified != true)
+        {
+            _logger.LogWarning("Unauthorized delete attempt for BasicModel with Id: {Id} by user: {User}", id, _user?.Email ?? "Unknown");
+            throw new ForbiddenException("User is not authorized to delete items.");
+        }
 
         try
         {
