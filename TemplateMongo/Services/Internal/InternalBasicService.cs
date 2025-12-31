@@ -16,7 +16,7 @@ public class InternalBasicService(
 {
     private readonly ILogger<InternalBasicService> _logger = logger;
     private readonly IBasicDomain _domain = domain;
-    private readonly ICurrentUser _user;
+    private readonly ICurrentUser _user = user;
 
     public async Task<PagedResult<BasicModel>> GetAllAsync(GetAllBasicParams parameters, CancellationToken cancellationToken = default)
     {
@@ -97,11 +97,6 @@ public class InternalBasicService(
     public async Task DeleteAsync(string id, CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Deleting BasicModel with Id: {Id}", id);
-
-        _logger.LogInformation("Current User: {User}", JsonSerializer.Serialize(_user, new JsonSerializerOptions
-        {
-            WriteIndented = true
-        }));
 
         if (_user?.EmailVerified != true)
         {
