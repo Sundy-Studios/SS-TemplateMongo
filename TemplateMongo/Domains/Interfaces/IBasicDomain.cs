@@ -1,8 +1,8 @@
 namespace TemplateMongo.Domains.Interfaces;
 
 using Common.Paging;
+using TemplateMongo.Client.Parameters;
 using TemplateMongo.Models;
-using TemplateMongo.Parameters;
 
 public interface IBasicDomain
 {

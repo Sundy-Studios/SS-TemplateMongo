@@ -2,8 +2,8 @@ namespace TemplateMongo.Tests.Domains.BasicDomainTests;
 
 using Common.Paging;
 using Moq;
+using TemplateMongo.Client.Parameters;
 using TemplateMongo.Models;
-using TemplateMongo.Parameters;
 
 public class GetAllAsyncTests : BasicDomainTestsBase
 {

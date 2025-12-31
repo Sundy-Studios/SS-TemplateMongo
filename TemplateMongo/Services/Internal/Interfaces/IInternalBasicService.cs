@@ -1,10 +1,10 @@
-namespace TemplateMongo.Dao.Interfaces;
+namespace TemplateMongo.Services.Internal.Interfaces;
 
 using Common.Paging;
 using TemplateMongo.Client.Parameters;
 using TemplateMongo.Models;
 
-public interface IBasicDao
+public interface IInternalBasicService
 {
     public Task<PagedResult<BasicModel>> GetAllAsync(GetAllBasicParams parameters, CancellationToken cancellationToken = default);
     public Task<BasicModel> GetByIdAsync(string id, CancellationToken cancellationToken = default);
