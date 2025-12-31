@@ -98,7 +98,7 @@ public class InternalBasicService(
     {
         _logger.LogInformation("Deleting BasicModel with Id: {Id}", id);
 
-        if (_user?.EmailVerified != true)
+        if (_user?.IsAuthenticated != true)
         {
             _logger.LogWarning("Unauthorized delete attempt for BasicModel with Id: {Id} by user: {User}", id, _user?.Email ?? "Unknown");
             throw new ForbiddenException("User is not authorized to delete items.");
