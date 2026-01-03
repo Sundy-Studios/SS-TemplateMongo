@@ -5,6 +5,7 @@ using Common.Isekai.Swagger;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
+using SS.Common.Logging;
 using TemplateMongo.Client.Services;
 using TemplateMongo.Dao;
 using TemplateMongo.Dao.Interfaces;
@@ -18,6 +19,9 @@ Console.WriteLine($"Mongo Template...");
 var builder = WebApplication.CreateBuilder(args);
 try
 {
+    var sumoUrl = builder.Configuration["SumoLogic:CollectorUrl"];
+    builder.AddSumoLogging(sumoUrl);
+
     builder.Services.AddFirebaseAuth(builder.Configuration);
 
     // MongoDB
