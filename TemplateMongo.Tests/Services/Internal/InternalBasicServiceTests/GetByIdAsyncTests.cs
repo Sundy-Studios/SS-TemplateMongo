@@ -22,11 +22,11 @@ public class GetByIdAsyncTests : InternalBasicServiceTestsBase
     [Fact]
     public async Task GetByIdAsyncReturnsNullWhenNotFound()
     {
-        MockDomain.Setup(d => d.GetByIdAsync("2", It.IsAny<CancellationToken>()))
-                   .ReturnsAsync((BasicModel?)null);
+        MockDomain
+        .Setup(d => d.GetByIdAsync("2", It.IsAny<CancellationToken>()))
+        .ThrowsAsync(new KeyNotFoundException());
 
-        var result = await Service.GetByIdAsync("2");
-
-        Assert.Null(result);
+        await Assert.ThrowsAsync<KeyNotFoundException>(() =>
+            Service.GetByIdAsync("2"));
     }
 }

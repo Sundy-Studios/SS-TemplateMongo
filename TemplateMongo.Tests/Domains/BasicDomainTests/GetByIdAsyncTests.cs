@@ -29,4 +29,15 @@ public class GetByIdAsyncTests : BasicDomainTestsBase
 
         MockDao.Verify(d => d.GetByIdAsync("1", It.IsAny<CancellationToken>()), Times.Once);
     }
+
+    [Fact]
+    public async Task GetByIdAsyncReturnsNullWhenNotFound()
+    {
+        MockDao
+        .Setup(d => d.GetByIdAsync("2", It.IsAny<CancellationToken>()))
+        .ThrowsAsync(new KeyNotFoundException());
+
+        await Assert.ThrowsAsync<KeyNotFoundException>(() =>
+            Domain.GetByIdAsync("2"));
+    }
 }

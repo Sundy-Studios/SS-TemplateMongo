@@ -35,14 +35,7 @@ public class BasicDomain(ILogger<BasicDomain> logger, IBasicDao dao) : IBasicDom
         try
         {
             var model = await _dao.GetByIdAsync(id, cancellationToken);
-            if (model == null)
-            {
-                _logger.LogWarning("No BasicModel found with Id: {Id}", id);
-            }
-            else
-            {
-                _logger.LogInformation("Fetched BasicModel with Id: {Id}", id);
-            }
+            _logger.LogInformation("Fetched BasicModel with Id: {Id}", id);
 
             return model;
         }
