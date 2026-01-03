@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using TemplateMongo.Client.Dto;
 using TemplateMongo.Client.Parameters;
 using TemplateMongo.Client.Services;
+using TemplateMongo.Mapping;
 using TemplateMongo.Models;
 using TemplateMongo.Services.Internal.Interfaces;
 
@@ -17,7 +18,7 @@ public class BasicService(IInternalBasicService service) : IBasicService
     {
         var result = await _service.GetAllAsync(parameters);
 
-        var dtoItems = result.Items.Select(BasicModel.ToDto).ToList();
+        var dtoItems = result.Items.Select(BasicMapper.ToDto).ToList();
 
         return PagedResultFactory.Create(
             dtoItems,
@@ -32,7 +33,7 @@ public class BasicService(IInternalBasicService service) : IBasicService
 
         var basicModel = await _service.GetByIdAsync(id);
 
-        return BasicModel.ToDto(basicModel);
+        return BasicMapper.ToDto(basicModel);
     }
 
     public async Task<BasicDto> CreateAsync([FromBody] CreateBasicParams parameters)
@@ -41,8 +42,8 @@ public class BasicService(IInternalBasicService service) : IBasicService
         Guard.AgainstNullOrWhiteSpace(parameters.Name, nameof(parameters.Name));
         Guard.AgainstNullOrWhiteSpace(parameters.Location, nameof(parameters.Location));
 
-        var createdModel = await _service.CreateAsync(BasicModel.FromParams(parameters));
-        return BasicModel.ToDto(createdModel);
+        var createdModel = await _service.CreateAsync(BasicMapper.From(parameters));
+        return BasicMapper.ToDto(createdModel);
     }
 
     public async Task UpdateAsync([FromRoute] string id, [FromBody] UpdateBasicParams parameters)
@@ -52,7 +53,9 @@ public class BasicService(IInternalBasicService service) : IBasicService
         Guard.AgainstNullOrWhiteSpace(parameters.Name, nameof(parameters.Name));
         Guard.AgainstNullOrWhiteSpace(parameters.Location, nameof(parameters.Location));
 
-        await _service.UpdateAsync(id, BasicModel.FromParams(id, parameters));
+        var model = new BasicModel() { Id = id };
+        BasicMapper.Apply(parameters, model);
+        await _service.UpdateAsync(id, model);
     }
 
     public async Task DeleteAsync([FromRoute] string id)

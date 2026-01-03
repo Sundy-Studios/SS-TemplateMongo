@@ -72,6 +72,7 @@ public class BasicDao : IBasicDao
         if (model == null)
         {
             _logger.LogWarning("No BasicModel found with Id: {Id}", id);
+            throw new KeyNotFoundException($"No BasicModel found with Id: {id}");
         }
 
         return model;
