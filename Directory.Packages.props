@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageVersion Include="SS.Common" Version="1.3.0-ss-9.3e5269c9" />
+    <PackageVersion Include="SS.Common" Version="1.3.0" />
   </ItemGroup>
 
 </Project>
