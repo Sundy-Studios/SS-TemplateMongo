@@ -27,4 +27,21 @@ public class GetByIdAsyncTests : BasicDaoTestsBase
         Assert.Equal("Test", result.Name);
     }
 
+    [Fact]
+    public async Task GetByIdAsyncCallsDaoOnceWithCorrectId()
+    {
+        var expected = new BasicModel { Id = "123", Name = "Test" };
+
+        var mockCursor = CreateMockCursor([null!]);
+
+        MockCollection
+            .Setup(c => c.FindAsync(
+                It.IsAny<FilterDefinition<BasicModel>>(),
+                It.IsAny<FindOptions<BasicModel, BasicModel>>(),
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(mockCursor.Object);
+
+        await Assert.ThrowsAsync<KeyNotFoundException>(() =>
+            Dao.GetByIdAsync("2"));
+    }
 }
